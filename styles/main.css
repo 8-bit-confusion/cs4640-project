@@ -5,7 +5,12 @@
     font-style: normal;
 }
 
-* { font-family: Roboto; }
+* {
+    font-family: Roboto;
+
+    --surface: #fef7ff;
+    --border: #d9d9d9;
+}
 
 h1, h2, h3, h4, h5, h6 {
     display: block;
@@ -19,6 +24,11 @@ h1, h2, h3, h4, h5, h6 {
 
 .flex-row { flex-direction: row; }
 .flex-col { flex-direction: column; }
+
+#main-header {
+    padding: 16px 64px 16px 64px;
+    border-bottom: 1px solid var(--border);
+}
 
 .profile-picture {
     width: 48px;
