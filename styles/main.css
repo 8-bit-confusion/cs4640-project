@@ -1,0 +1,39 @@
+@font-face {
+    font-family: Roboto;
+    src: url(Roboto-Regular.ttf);
+    font-weight: normal;
+    font-style: normal;
+}
+
+* { font-family: Roboto; }
+
+h1, h2, h3, h4, h5, h6 {
+    display: block;
+    margin: 0px;
+}
+
+[class*="flex-"] {
+    display: flex;
+    gap: 16px;
+}
+
+.flex-row { flex-direction: row; }
+.flex-col { flex-direction: column; }
+
+.profile-picture {
+    background-image: url(pfp.jpg);
+    background-repeat: no-repeat;
+    background-size: 64px;
+    background-position: center;
+    width: 64px;
+    height: 64px;
+
+    border-style: none;
+    border-radius: 64px;
+}
+
+.create-account {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
