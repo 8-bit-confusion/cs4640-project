@@ -37,7 +37,11 @@ h1, h2, h3, h4, h5, h6 {
     border-radius: 32px;
 }
 
+<<<<<<< HEAD
 .browse-row {
+=======
+.section-row {
+>>>>>>> 8779540f83a01eeacb8ba78bc25e50cd516c59c9
     border: 1px solid var(--border);
     border-radius: 24px;
     padding: 16px;
