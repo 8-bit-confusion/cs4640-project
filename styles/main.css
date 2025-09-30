@@ -11,6 +11,8 @@
     --surface: #fef7ff;
     --header-border: #d9d9d9;
     --border: #79747e;
+    --secondary-surface: #e8def8;
+    --on-secondary-surface: #4a4459;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -37,11 +39,30 @@ h1, h2, h3, h4, h5, h6 {
     border-radius: 32px;
 }
 
+.browse-section {
+    gap: 16px;
+}
+
 .browse-row {
     border: 1px solid var(--border);
     border-radius: 24px;
     padding: 16px;
     gap: 24px;
+}
+
+.resource-card {
+    padding: 16px;
+    border-radius: 16px;
+    background-color: var(--secondary-surface);
+}
+
+.resource-preview {
+    width: 192px; height: 128px;
+    border-radius: 8px;
+}
+
+.on-resource-card {
+    color: var(--on-secondary-surface);
 }
 
 .create-account {

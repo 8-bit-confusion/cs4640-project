@@ -18,18 +18,22 @@
         <div class="flex-col" style="align-items: center;">
             <div id="search-bar-container" class="flex-row" style="align-items: center; align-self: stretch;"></div>
             <div id="browse-sections" class="flex-col" style="align-items: start;">
-                <div class="browse-section">
+                <div class="browse-section flex-col">
                     <h2 style="font-weight: normal;">Most downloaded</h2>
-                    <div class="browse-row">
-
+                    <div class="browse-row flex-row">
+                        <div class="resource-card flex-col">
+                            <img class="resource-preview" src="styles/img-preview.jpg">
+                            <div class="flex-row">
+                                <span class="on-resource-card" style="flex-grow: 1;">Resource title</span>
+                                <span class="on-resource-card resource-downloads">###</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="browse-section">
+                <div class="browse-section flex-col">
                     <h2 style="font-weight: normal;">Recently uploaded</h2>
-                    <div class="browse-row">
-                        <div class="resource-card">
-
-                        </div>
+                    <div class="browse-row flex-row">
+                        
                     </div>
                 </div>
             </div>
