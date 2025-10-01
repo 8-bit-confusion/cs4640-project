@@ -6,18 +6,43 @@
         <meta charset="utf-8">
         <link rel="stylesheet" href="styles/main.css">
     </head>
-    <body>
-        <nav>
-        </nav>
-        <div>
-            <h1> Create an OpenLearn Account </h1>
-            <form class="create-account">
-                <input type="text"> 
-                <input type="text"> 
-                <input type="text"> 
-                <input type="text"> 
-                <input type="submit"> 
-            </form>
+    <body style="background-color: #FEF7FF;">
+        <header id="main-header" class="flex-row" style="justify-content: space-between; align-items: center;">
+            <h1 style="font-weight: normal;">OpenLearn</h1>
+            <nav>
+                <a href="profile.html">
+                    <img class="profile-picture" src="styles/pfp.jpg">
+                </a>
+            </nav>
+        </header>
+        <div class="flex-row register">
+            <div class="create-account">
+                <h1> Create an OpenLearn Account </h1>
+                <form class="register-form">
+                    <div class="div-input">
+                        <label for="username">Username:</label><br>
+                        <input type="text" id="username" name="username">
+                    </div>
+                    <div class="div-input">
+                        <label for="display_name">Display name:</label><br>
+                        <input type="text" id="display_name" name="display_name">
+                    </div>
+                    <div class="div-input">
+                        <label for="pwd">Password:</label><br>
+                        <input type="password" id="pwd" name="pwd">
+                    </div>
+                    <div class="div-input">
+                        <label for="retype_pwd">Retype password:</label><br>
+                        <input type="password" id="retype_pwd" name="retype_pwd"> 
+                    </div>
+                    <div class="div-input submit">
+                        <input class="submit-button" type="submit" value="Submit"> 
+                    </div>
+                </form>
+            </div>
+            <div>
+                <img src="styles\img-preview.jpg" width="50%">
+            </div>
         </div>
     </body>
 </html>

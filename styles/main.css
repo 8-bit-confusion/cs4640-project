@@ -67,6 +67,54 @@ h1, h2, h3, h4, h5, h6 {
 
 .create-account {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: center;
+  width: 50%;
+  height: 100%;
+}
+
+.submit-button {
+    color: white;
+    background-color: purple;
+    align-items: flex-end;
+    padding: 0%;
+    height: 25px;
+    width: 25%;
+
+}
+
+.div-input {
+    width: 100%;
+    border-radius: 15px;
+    padding-top: 10px;
+    padding-bottom:10px;
+}
+ 
+input {
+    width: 100%;
+    padding-top: 10px;
+    padding-bottom:10px;
+    border-radius: 15px;
+    height: 15px;
+}
+
+.submit {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+}
+
+.register {
+    justify-content: center;
+    align-items: center;
+    height: 500px;
+}
+
+.register-form {
+    display: flex;
+    flex-direction: column;
+    width: 75%;
+
 }
