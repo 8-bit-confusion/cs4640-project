@@ -7,6 +7,34 @@
         <link rel="stylesheet" href="styles/main.css">
     </head>
     <body>
-        
+        <header id="main-header" class="flex-row" style="justify-content: space-between; align-items: center;">
+            <h1 style="font-weight: normal;">OpenLearn</h1>
+            <nav>
+                <a href="profile.html">
+                    <img class="profile-picture" src="styles/pfp.jpg">
+                </a>
+            </nav>
+        </header>
+        <div class="flex-col resource">
+            <form class="flex-col register">
+                <div class="div-input">
+                    <label for="resource-title">Title</label><br>
+                    <input type="text" name="title" id="resource-title">
+                </div>
+                <div class="div-input description">
+                    <label for="resource-description">Description</label><br>
+                    <input type="text" name="description" id="resource-description">
+                </div>
+                <div class="div-input">
+                    <input type="file" name="files" id="resource-files">
+                </div>
+                <div class="div-input">
+                    <input type="search" name="tags" id="resource-tags">
+                </div>
+                <div class="div-input submit">
+                    <input class="submit-button" type="submit" name="publish" id="publish-resource">
+                </div>
+            </form>
+        </div>
     </body>
 </html>

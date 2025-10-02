@@ -118,3 +118,8 @@ input {
     width: 75%;
 
 }
+
+.resource {
+    justify-content: center;
+    align-items: center;
+}
