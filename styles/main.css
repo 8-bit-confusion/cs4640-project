@@ -87,8 +87,6 @@ h1, h2, h3, h4, h5, h6 {
 .div-input {
     width: 100%;
     border-radius: 15px;
-    padding-top: 10px;
-    padding-bottom:10px;
 }
  
 input {
@@ -97,6 +95,7 @@ input {
     padding-bottom:10px;
     border-radius: 15px;
     height: 15px;
+    background-color: #FEF7FF;
 }
 
 .submit {
@@ -122,4 +121,16 @@ input {
 .resource {
     justify-content: center;
     align-items: center;
+}
+
+/* .description {
+    padding-top: 25px;
+    padding-bottom: 25px;
+} */
+
+textarea {
+    width: 100%;
+    border-radius: 15px;
+    resize: none;
+    background: #FEF7FF;
 }
