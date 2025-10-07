@@ -4,44 +4,45 @@
         <title>Register - OpenLearn</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta charset="utf-8">
+        <meta name="author" content="Lilli Hrncir">
         <link rel="stylesheet" href="styles/main.css">
     </head>
-    <body style="background-color: #FEF7FF;">
+    <body style="background-color: var(--surface);">
         <header id="main-header" class="flex-row" style="justify-content: space-between; align-items: center;">
             <h1 style="font-weight: normal;">OpenLearn</h1>
             <nav>
                 <a href="profile.html">
-                    <img class="profile-picture" src="styles/pfp.jpg">
+                    <img class="profile-picture" src="styles/pfp.jpg" alt="Your profile picture">
                 </a>
             </nav>
         </header>
         <div class="flex-row register">
             <div class="create-account">
                 <h1> Create an OpenLearn Account </h1>
-                <form class="flex-col register-form">
+                <form class="flex-col register-form" method="post">
                     <div class="div-input">
                         <label for="username">Username:</label><br>
-                        <input type="text" id="username" name="username">
+                        <input class="register-input" type="text" id="username" name="username" required>
                     </div>
                     <div class="div-input">
                         <label for="display_name">Display name:</label><br>
-                        <input type="text" id="display_name" name="display_name">
+                        <input class="register-input" type="text" id="display_name" name="display_name" required>
                     </div>
                     <div class="div-input">
                         <label for="pwd">Password:</label><br>
-                        <input type="password" id="pwd" name="pwd">
+                        <input class="register-input" class="register-input" type="password" id="pwd" name="pwd" required>
                     </div>
                     <div class="div-input">
                         <label for="retype_pwd">Retype password:</label><br>
-                        <input type="password" id="retype_pwd" name="retype_pwd"> 
+                        <input class="register-input" type="password" id="retype_pwd" name="retype_pwd" required> 
                     </div>
                     <div class="div-input submit">
                         <input class="submit-button" type="submit" value="Submit"> 
                     </div>
                 </form>
             </div>
-            <div>
-                <img src="styles\img-preview.jpg" width="50%">
+            <div style="width:50%">
+                <img src="styles/Open Learn Logo.png" alt="Open Learn Logo" width="400px" height="400px" style="vertical-align:middle; text-align:center;">
             </div>
         </div>
     </body>

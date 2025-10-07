@@ -4,9 +4,10 @@
         <title>Create Resource - OpenLearn</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta charset="utf-8">
+        <meta name="author" content="Lilli Hrncir">
         <link rel="stylesheet" href="styles/main.css">
     </head>
-    <body style="background-color: #FEF7FF;">
+    <body style="background-color: var(--surface);">
         <header id="main-header" class="flex-row" style="justify-content: space-between; align-items: center;">
             <h1 style="font-weight: normal;">OpenLearn</h1>
             <nav>
@@ -16,10 +17,10 @@
             </nav>
         </header>
         <div class="flex-col resource">
-            <form class="flex-col register">
+            <form class="flex-col register" method="post">
                 <div class="div-input">
                     <label for="resource-title">Title</label><br>
-                    <input type="text" name="title" id="resource-title">
+                    <input type="text" name="title" id="resource-title" required>
                 </div>
                 <div class="div-input description">
                     <label for="resource-description">Description</label><br>
@@ -27,7 +28,7 @@
                     </textarea>
                 </div>
                 <div class="div-input">
-                    <input type="file" name="files" id="resource-files">
+                    <input type="file" name="files" id="resource-files" required>
                 </div>
                 <div class="div-input">
                     <input type="search" name="tags" id="resource-tags">
