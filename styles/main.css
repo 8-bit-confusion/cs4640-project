@@ -137,13 +137,13 @@ h1, h2, h3, h4, h5, h6 {
     border-radius: 15px;
 }
  
-input {
+.register-input {
     width: 100%;
     padding-top: 10px;
     padding-bottom:10px;
-    border-radius: 15px;
-    height: 15px;
-    background-color: #FEF7FF;
+    border-radius: 16px;
+    background-color: var(--surface);
+    border: 1px solid var(--border);
 }
 
 .submit {
