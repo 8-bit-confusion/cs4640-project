@@ -29,6 +29,17 @@ h1, h2, h3, h4, h5, h6 {
 .flex-row { flex-direction: row; }
 .flex-col { flex-direction: column; }
 
+.page-fill-body {
+    margin: 0px;
+    gap: 0px;
+
+    box-sizing: border-box;
+    height: 100vh;
+    padding-bottom: 32px;
+    
+    background-color: var(--surface);
+}
+
 #main-header {
     padding: 16px 64px 16px 64px;
     border-bottom: 1px solid var(--header-border);
@@ -41,10 +52,10 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 #search-bar-container {
+    justify-content: center;
     align-items: center;
     width: 100%;
-    justify-self: stretch;
-
+    flex-grow: 1;
 }
 
 .search-bar, .search-bar:focus {
