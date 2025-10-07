@@ -18,10 +18,12 @@
         <div class="flex-col" style="align-items: center; justify-content: start; height: 100%;">
             <div id="search-bar-container" class="flex-col" >
                 <form id="search-bar-form" method="get">
-                    <input id="search-bar" type="text" id="search" placeholder="Search for learning resources">
-                    <button id="search-button" type="submit">
-                        <img id="search-button-icon" src="styles/search-icon.svg">
-                    </button>
+                    <input id="search-bar" type="text" name="q" placeholder="Search for learning resources">
+                    <div id="search-button-container" class="flex-col">
+                        <button class="flex-col" id="search-button" form="search-bar-form" type="submit">
+                            <img id="search-button-icon" src="styles/search-icon.svg">
+                        </button>
+                    </div>
                 </form>
             </div>
             <div id="browse-sections" class="flex-col" style="align-items: start;">

@@ -76,20 +76,43 @@ button:hover {
     font-size: 16px;
     border-radius: 32px;
     background-color: var(--secondary-surface);
+    color: var(--on-secondary-surface);
+
+    &::placeholder {
+        color: var(--on-secondary-surface);
+    }
 }
 
-#search-button, #search-button:hover, #search-button:focus {
+#search-button-container {
     position: absolute;
-    aspect-ratio: 1; height: 90%;
+    aspect-ratio: 1; height: 100%;
+
+    top: 0px;
     right: 0px;
 
+    justify-content: center;
+    align-items: center;
+}
+
+#search-button {
+    box-sizing: border-box;
+    aspect-ratio: 1; height: 80%;
     outline: none;
     border-style: none;
+    border-radius: 64px;
     background-color: transparent;
+
+    justify-content: center;
+    align-items: center;
+
+    &:hover {
+        background-color: var(--secondary-surface);
+        filter: brightness(0.9);
+    }
 }
 
 #search-button-icon {
-    width: 100%; height: 100%;
+    width: 80%; height: 80%;
 }
 
 .browse-row {
