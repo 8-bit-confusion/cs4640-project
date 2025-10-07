@@ -219,3 +219,13 @@ textarea {
     resize: none;
     background: #FEF7FF;
 }
+
+input[type="file"] {
+ display: none;
+}
+
+.custom-file-upload {
+    border-radius: 15px;
+    color: #4A4459;
+    background-color: var(--secondary-surface);
+}
