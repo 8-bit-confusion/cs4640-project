@@ -16,9 +16,10 @@
             </nav>
         </header>
         <div class="flex-col" style="align-items: center; justify-content: start; height: 100%;">
-            <div id="search-bar-container" class="flex-col">
-                <input class="search-bar" placeholder="Search for learning resources">
-            </div>
+            <form id="search-bar-container" class="flex-col" method="get">
+                <input class="search-bar" type="text" id="search" placeholder="Search for learning resources">
+                <button type="submit"></button>
+            </form>
             <div id="browse-sections" class="flex-col" style="align-items: start;">
                 <div class="browse-section flex-col">
                     <h2 style="font-weight: normal;">Most downloaded</h2>

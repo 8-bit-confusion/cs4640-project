@@ -7,7 +7,7 @@
         <meta name="author" content="Lilli Hrncir">
         <link rel="stylesheet" href="styles/main.css">
     </head>
-    <body style="background-color: var(--surface);">
+    <body class="flex-col page-fill-body" style="background-color: var(--surface);">
         <header id="main-header" class="flex-row" style="justify-content: space-between; align-items: center;">
             <h1 style="font-weight: normal;">OpenLearn</h1>
             <nav>
@@ -16,24 +16,24 @@
                 </a>
             </nav>
         </header>
-        <div class="flex-row register">
+        <div class="flex-row register" style="flex-grow: 1;">
             <div class="create-account">
                 <h1> Create an OpenLearn Account </h1>
                 <form class="flex-col register-form" method="post">
                     <div class="div-input">
-                        <label for="username">Username:</label><br>
+                        <label for="username">Username</label><br>
                         <input class="register-input" type="text" id="username" name="username" required>
                     </div>
                     <div class="div-input">
-                        <label for="display_name">Display name:</label><br>
+                        <label for="display_name">Display name</label><br>
                         <input class="register-input" type="text" id="display_name" name="display_name" required>
                     </div>
                     <div class="div-input">
-                        <label for="pwd">Password:</label><br>
+                        <label for="pwd">Password</label><br>
                         <input class="register-input" class="register-input" type="password" id="pwd" name="pwd" required>
                     </div>
                     <div class="div-input">
-                        <label for="retype_pwd">Retype password:</label><br>
+                        <label for="retype_pwd">Retype password</label><br>
                         <input class="register-input" type="password" id="retype_pwd" name="retype_pwd" required> 
                     </div>
                     <div class="div-input submit">
