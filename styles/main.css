@@ -236,7 +236,8 @@ input[type="file"] {
 }
 
 .custom-file-upload {
-    padding: 3px;
+    margin: 1px;
+    padding: 4px;
     justify-self: right;
     border-radius: 25px;
     color: #4A4459;
@@ -259,12 +260,14 @@ input[type="file"] {
 }
 
 .styled-file {
+    max-height: 25px;
     display: flex;
     flex-direction: row;
     background-color: var(--secondary-surface);
     color:#79747e;
     width: -webkit-fill-available;
-    border-radius: 20px;
+    border-radius: 10px;
     border: none;
+    padding: 3px;
     margin: 3px;
 }
