@@ -201,8 +201,9 @@ button:hover {
 }
 
 .register-input {
+    height: fit-content;
     width: -webkit-fill-available;
-    padding: 5px;
+    padding: 10px;
     border-radius: 10px;
     background-color: var(--surface);
     border: 1px solid var(--border);
@@ -231,11 +232,39 @@ button:hover {
 }
 
 input[type="file"] {
- display: none;
+    display: none;
 }
 
 .custom-file-upload {
-    border-radius: 15px;
+    padding: 3px;
+    justify-self: right;
+    border-radius: 25px;
     color: #4A4459;
     background-color: var(--secondary-surface);
+    min-width: fit-content;
+}
+
+.file-container {
+    padding: 5px;
+    width: -webkit-fill-available;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: fit-content;
+    height: 25%;
+    background-color: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+
+}
+
+.styled-file {
+    display: flex;
+    flex-direction: row;
+    background-color: var(--secondary-surface);
+    color:#79747e;
+    width: -webkit-fill-available;
+    border-radius: 20px;
+    border: none;
+    margin: 3px;
 }

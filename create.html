@@ -21,15 +21,25 @@
                 <form class="flex-col center" method="post">
                     <div class="div-input">
                         <label for="resource-title">Title</label><br>
-                        <input class="register-input" type="text" name="title" id="resource-title" required>
+                        <input class="register-input" style="font-size:x-large;" name="title" id="resource-title" required>
                     </div>
                     <div class="div-input description">
                         <label for="resource-description">Description</label><br>
                         <textarea class="register-input" style="resize:none;" name="description" id="resource-description" rows="4" column="100"></textarea>
                     </div>
-                    <div class="div-input">
-                        <label for="resource-files" class="custom-file-upload">Upload Files</label><br>
-                        <input class="register-input" type="file" name="files" id="resource-files" required>
+                    <div class="file-container">
+                        <div class="styled-file">
+                            <img style="height:20px;justify-self:left;" src="styles/attach-file-icon.png">
+                            <p style="justify-content: center;">cover_image.png</p>
+
+                        </div>
+                        <div class="styled-file">meow</div>
+                        <div class="styled-file">c</div>
+                        <div class="styled-file">d</div>
+                        <div class="flex-row" style="justify-content:end;">
+                            <label for="resource-files" class="custom-file-upload">Upload Files</label><br>
+                            <input class="register-input" type="file" name="files" id="resource-files" required>
+                        </div>
                     </div>
                     <div class="div-input">
                         <input class="register-input" type="search" name="tags" id="resource-tags">
