@@ -183,6 +183,8 @@ button:hover {
     border-radius: 20px;
 }
 
+
+/* Use this class with a div, input, and label. Will style label to be on top of input box. */
 .div-input {
     width: 100%;
     position: relative;
@@ -231,18 +233,20 @@ button:hover {
     width: 75%;
 }
 
+
+/* These next two classes overide the default "upload file" input and replace with a fitting button. */
 input[type="file"] {
     display: none;
 }
 
 .custom-file-upload {
     margin: 1px;
-    padding: 4px;
-    justify-self: right;
-    border-radius: 25px;
+    padding: 10px;
+    border-radius: 20px;
     color: #4A4459;
     background-color: var(--secondary-surface);
     min-width: fit-content;
+    font-size: small;
 }
 
 .file-container {
@@ -252,11 +256,14 @@ input[type="file"] {
     flex-direction: column;
     justify-content: space-between;
     min-height: fit-content;
-    height: 25%;
+    height: 50%;
     background-color: var(--surface);
     border: 1px solid var(--border);
     border-radius: 10px;
 
+    & > * {
+        margin: 3px;
+    }
 }
 
 .styled-file {
@@ -269,5 +276,10 @@ input[type="file"] {
     border-radius: 10px;
     border: none;
     padding: 3px;
-    margin: 3px;
+
+   & > img {
+        margin-left: 2px;
+        margin-right: 2px;
+        height: 20px;
+    }
 }
