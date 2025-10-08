@@ -7,7 +7,7 @@
         <meta name="author" content="Lilli Hrncir">
         <link rel="stylesheet" href="styles/main.css">
     </head>
-    <body style="background-color: var(--surface);">
+    <body class="flex-col page-fill-body">
         <header id="main-header" class="flex-row" style="justify-content: space-between; align-items: center;">
             <h1 style="font-weight: normal;">OpenLearn</h1>
             <nav>
@@ -16,27 +16,29 @@
                 </a>
             </nav>
         </header>
-        <div class="flex-col resource">
-            <form class="flex-col register" method="post">
-                <div class="div-input">
-                    <label for="resource-title">Title</label><br>
-                    <input class="register-input" type="text" name="title" id="resource-title" required>
-                </div>
-                <div class="div-input description">
-                    <label for="resource-description">Description</label><br>
-                    <textarea class="register-input" name="description" id="resource-description" rows="4" column="100"></textarea>
-                </div>
-                <div class="div-input">
-                    <label for="resource-files" class="custom-file-upload">Upload Files</label><br>
-                    <input class="register-input" type="file" name="files" id="resource-files" required>
-                </div>
-                <div class="div-input">
-                    <input class="register-input" type="search" name="tags" id="resource-tags">
-                </div>
-                <div class="div-input submit">
-                    <button class="submit-button" type="submit" name="publish" id="publish-resource">Submit</button>
-                </div>
-            </form>
+        <div class="flex-row center" style="flex-grow: 1;">
+            <div class="flex-col" style="max-height:75%;min-width: min-content;min-height: min-content;max-width: 55%;width: -webkit-fill-available;">
+                <form class="flex-col center" method="post">
+                    <div class="div-input">
+                        <label for="resource-title">Title</label><br>
+                        <input class="register-input" type="text" name="title" id="resource-title" required>
+                    </div>
+                    <div class="div-input description">
+                        <label for="resource-description">Description</label><br>
+                        <textarea class="register-input" style="resize:none;" name="description" id="resource-description" rows="4" column="100"></textarea>
+                    </div>
+                    <div class="div-input">
+                        <label for="resource-files" class="custom-file-upload">Upload Files</label><br>
+                        <input class="register-input" type="file" name="files" id="resource-files" required>
+                    </div>
+                    <div class="div-input">
+                        <input class="register-input" type="search" name="tags" id="resource-tags">
+                    </div>
+                    <div class="div-input submit">
+                        <button class="styled-button" type="submit" name="publish" id="publish-resource">Publish Resource</button>
+                    </div>
+                </form>
+            </div>
         </div>
     </body>
 </html>

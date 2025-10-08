@@ -171,19 +171,20 @@ button:hover {
   height: 100%;
 }
 
-.submit-button {
+.styled-button {
+    border: none;
     color: white;
     background-color: var(--primary);
     align-items: flex-end;
-    padding: 0%;
-    height: 25px;
+    padding: 10px;
+    height: fit-content;
     width: 25%;
-    border-radius: 15px;
+    min-width: fit-content;
+    border-radius: 20px;
 }
 
 .div-input {
     width: 100%;
-    border-radius: 15px;
     position: relative;
     & > label {
         padding: 2px;
@@ -200,11 +201,9 @@ button:hover {
 }
 
 .register-input {
-    width: 100%;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    padding-left: 10px;
-    border-radius: 16px;
+    width: -webkit-fill-available;
+    padding: 5px;
+    border-radius: 10px;
     background-color: var(--surface);
     border: 1px solid var(--border);
     &:focus {
@@ -220,7 +219,7 @@ button:hover {
     justify-content: end;
 }
 
-.register {
+.center {
     justify-content: center;
     align-items: center;
 }
@@ -229,18 +228,6 @@ button:hover {
     display: flex;
     flex-direction: column;
     width: 75%;
-}
-
-.resource {
-    justify-content: center;
-    align-items: center;
-}
-
-textarea {
-    width: 100%;
-    border-radius: 15px;
-    resize: none;
-    background: #FEF7FF;
 }
 
 input[type="file"] {
