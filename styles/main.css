@@ -21,6 +21,11 @@ h1, h2, h3, h4, h5, h6 {
     margin: 0px;
 }
 
+.nav-main {
+    text-decoration: none;
+    color: black;
+}
+
 button:hover {
     cursor: pointer;
 }
@@ -60,11 +65,12 @@ button:hover {
     align-items: center;
     width: 100%;
     flex-grow: 1;
+    padding: 64px 0px;
 }
 
 #search-bar-form {
     position: relative;
-    width: 40%;
+    width: max(40%, min(348px, calc(100% - 32px)));
 }
 
 #search-bar, #search-bar:focus {
@@ -149,6 +155,10 @@ button:hover {
 
 .download-icon {
     width: 18px; height: 18px;
+}
+
+.download-icon-large {
+    width: 32px; height: 32px;
 }
 
 .browse-section {
@@ -281,5 +291,42 @@ input[type="file"] {
         margin-left: 2px;
         margin-right: 2px;
         height: 20px;
+    }
+}
+
+@media only screen and (max-width: 1048px) {
+    .browse-row {
+        width: 472px;
+        flex-wrap: wrap;
+    }
+
+    .register {
+        flex-direction: column-reverse;
+
+        & div:has(img) {
+            width: 100% !important;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        & img {
+            width: min(400px, calc(80% - 32px));
+            height: unset;
+            aspect-ratio: 1;
+        }
+    }
+
+    .create-account {
+        width: 100%;
+        padding: 0px 16px;
+        margin-bottom: 64px;
+    }
+}
+
+@media only screen and (max-width: 548px) {
+    .browse-row {
+        width: unset;
+        flex-direction: column;
     }
 }
