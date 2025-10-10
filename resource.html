@@ -11,8 +11,8 @@
         <header id="main-header" class="flex-row" style="justify-content: space-between; align-items: center;">
             <a class="nav-main" href="./"><h1 style="font-weight: normal;">OpenLearn</h1></a>
             <nav>
-                <a href="profile.html">
-                    <img class="profile-picture" src="styles/pfp.jpg">
+                <a href="profile.html" aria-label="Open profile">
+                    <img class="profile-picture" src="styles/pfp.jpg" alt="Profile picture">
                 </a>
             </nav>
         </header>
@@ -37,13 +37,13 @@
                     occaecat cupidatat non proident, sunt in culpa qui officia
                     deserunt mollit anim id est laborum.
                 </span>
-                <img class="preview" src="styles/img-preview.jpg">
+                <img class="preview" src="styles/img-preview.jpg" alt="Image preview">
                 <div class="outline-section flex-col">
                     <div class="styled-file">
-                        <img style="height:20px;justify-self:left;" src="styles/attach-file-icon.png">
+                        <img style="height:20px;justify-self:left;" src="styles/attach-file-icon.png" alt="File attachment icon">
                         <span style="flex-grow: 1">uploaded_file.pdf</span>
-                        <button class="flex-col icon-button" type="button">
-                            <img src="styles/download-icon.svg">
+                        <button id="rv-download-button" class="flex-col icon-button" aria-label="Download file" type="button">
+                            <img src="styles/download-icon.svg" alt="Download icon">
                         </button>
                     </div>
                 </div>
@@ -62,12 +62,12 @@
             <div class="resource-comments flex-col">
                 <span style="font-size: 36px; height: 42px;">Comments</span>
                 <form class="div-input flex-col" style="gap: 10px; align-items: end; padding-bottom: 10px;" method="post">
-                    <textarea class="register-input comment-input" rows="4" column="100" name="comment" required></textarea>
+                    <textarea class="register-input comment-input" rows="4" name="comment" aria-label="Comment entry field" required></textarea>
                     <button class="styled-button" type="submit">Post comment</button>
                 </form>
                 <div class="comment-container flex-col">
                     <div class="comment flex-row">
-                        <img class="comment-pfp" src="styles/pfp.jpg">
+                        <img class="comment-pfp" src="styles/pfp.jpg" alt="Commenter profile picture">
                         <span style="color: var(--on-secondary-surface);">
                             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
                         </span>
@@ -79,7 +79,7 @@
                 </div>
                 <div class="comment-container flex-col">
                     <div class="comment flex-row">
-                        <img class="comment-pfp" src="styles/pfp.jpg">
+                        <img class="comment-pfp" src="styles/pfp.jpg" alt="Commenter profile picture">
                         <span style="color: var(--on-secondary-surface);">
                             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
                         </span>
@@ -90,7 +90,7 @@
                     </div>
                     <div class="comment-container flex-col">
                         <div class="comment flex-row">
-                            <img class="comment-pfp" src="styles/pfp.jpg">
+                            <img class="comment-pfp" src="styles/pfp.jpg" alt="Commenter profile picture">
                             <span style="color: var(--on-secondary-surface);">
                                 Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
                             </span>

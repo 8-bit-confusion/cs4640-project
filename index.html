@@ -10,8 +10,8 @@
         <header id="main-header" class="flex-row" style="justify-content: space-between; align-items: center;">
             <h1 style="font-weight: normal;">OpenLearn</h1>
             <nav>
-                <a href="profile.html">
-                    <img class="profile-picture" src="styles/pfp.jpg">
+                <a href="profile.html" aria-label="Open profile">
+                    <img class="profile-picture" src="styles/pfp.jpg" alt="Profile picture">
                 </a>
             </nav>
         </header>
@@ -20,8 +20,8 @@
                 <form id="search-bar-form" method="get">
                     <input id="search-bar" type="text" name="q" placeholder="Search for learning resources">
                     <div id="search-button-container" class="flex-col">
-                        <button class="flex-col" id="search-button" form="search-bar-form" type="submit">
-                            <img id="search-button-icon" src="styles/search-icon.svg">
+                        <button class="flex-col" id="search-button" aria-label="Search" form="search-bar-form" type="submit">
+                            <img id="search-button-icon" src="styles/search-icon.svg" alt="Search icon">
                         </button>
                     </div>
                 </form>
