@@ -283,3 +283,50 @@ input[type="file"] {
         height: 20px;
     }
 }
+
+.tag-container {
+    padding: 5px;
+    width: -webkit-fill-available;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    min-height: fit-content;
+    height: 50%;
+    background-color: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+
+    & > * {
+        margin: 3px;
+    }
+}
+
+.tag {
+    max-height: 25px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    background-color: var(--secondary-surface);
+    color:#79747e;
+    width: min-content;
+    border-radius: 10px;
+    border: none;
+    padding: 3px;
+
+   & > img {
+        margin-left: 2px;
+        margin-right: 2px;
+        height: 20px;
+    }
+    
+    & > textarea {
+        max-width: 100%;
+        border: none;
+        background-color: var(--secondary-surface);
+        width: 50px;
+        resize: horizontal;
+        height: 16px;
+        margin: 0px;
+    } 
+
+}
