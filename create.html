@@ -12,7 +12,7 @@
             <a class="nav-main" href="./"><h1 style="font-weight: normal;">OpenLearn</h1></a>
             <nav>
                 <a href="profile.html">
-                    <img class="profile-picture" src="styles/pfp.jpg">
+                    <img class="profile-picture" src="styles/pfp.jpg" alt="Profile picture">
                 </a>
             </nav>
         </header>
@@ -30,9 +30,9 @@
                     <div class="file-container">
                         <div class="styled-file">
                             <img style="height:20px;justify-self:left;" src="styles/attach-file-icon.png">
-                            <span style="flex-grow: 1">cover_image.png</span>
-                            <img style="height:20px;justify-self:left;" src="styles/picture-icon.svg">
-                            <img style="height:20px;justify-self:left;" src="styles/close-icon.svg">
+                            <span style="flex-grow: 1;font-size: small;">cover_image.png</span>
+                            <img class="icon-button" style="height:20px;justify-self:left;" src="styles/picture-icon.svg">
+                            <img class="icon-button" style="height:20px;justify-self:left;" src="styles/close-icon.svg">
                         </div>
                         <div style="display:flex;flex-direction:row-reverse;">
                             <label for="resource-files" class="custom-file-upload">Upload Files</label><br>
@@ -41,7 +41,7 @@
                     </div>
                     <div class="tag-container">
                         <div class="flex-row tag">
-                            <textarea name="tags" id="resource-tags"></textarea>
+                            <textarea title="tags" name="tags" id="resource-tags"></textarea>
                             <img src="styles/close-icon.svg">
                         </div>
                     </div>

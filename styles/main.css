@@ -257,6 +257,10 @@ input[type="file"] {
     background-color: var(--secondary-surface);
     min-width: fit-content;
     font-size: small;
+
+    &:hover {
+        cursor:pointer;
+    }
 }
 
 .file-container {
@@ -337,7 +341,18 @@ input[type="file"] {
         resize: horizontal;
         height: 16px;
         margin: 0px;
+        font-family: Roboto;
+        &:focus {
+            border: none;
+        }
     } 
+
+}
+
+#resource-tags {
+    &:focus {
+        border: none;
+    }
 }
 
 @media only screen and (max-width: 1048px) {
