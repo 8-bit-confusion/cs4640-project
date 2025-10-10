@@ -61,6 +61,10 @@
             </div>
             <div class="resource-comments flex-col">
                 <span style="font-size: 36px; height: 42px;">Comments</span>
+                <form class="div-input flex-col" style="gap: 10px; align-items: end; padding-bottom: 10px;" method="post">
+                    <textarea class="register-input comment-input" rows="4" column="100" name="comment" required></textarea>
+                    <button class="styled-button" type="submit">Post comment</button>
+                </form>
                 <div class="comment-container flex-col">
                     <div class="comment flex-row">
                         <img class="comment-pfp" src="styles/pfp.jpg">
@@ -68,7 +72,10 @@
                             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
                         </span>
                     </div>
-                    <button class="link-button">Delete comment</button>
+                    <div class="flex-row">
+                        <button class="link-button">Reply</button>
+                        <button class="link-button">Delete comment</button>
+                    </div>
                 </div>
                 <div class="comment-container flex-col">
                     <div class="comment flex-row">
@@ -77,7 +84,10 @@
                             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
                         </span>
                     </div>
-                    <button class="link-button">Delete comment</button>
+                    <div class="flex-row">
+                        <button class="link-button">Reply</button>
+                        <button class="link-button">Delete comment</button>
+                    </div>
                     <div class="comment-container flex-col">
                         <div class="comment flex-row">
                             <img class="comment-pfp" src="styles/pfp.jpg">
@@ -85,7 +95,10 @@
                                 Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
                             </span>
                         </div>
-                        <button class="link-button">Delete comment</button>
+                        <div class="flex-row">
+                            <button class="link-button">Reply</button>
+                            <button class="link-button">Delete comment</button>
+                        </div>
                     </div>
                 </div>
             </div>
