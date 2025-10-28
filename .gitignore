@@ -1,2 +1,3 @@
 DBConfig.php
-credentials
+.env
+/vendor/
