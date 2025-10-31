@@ -42,7 +42,7 @@ class SessionController {
         // if the command is something else, change it to showing the welcome page.
         if (!isset($_SESSION["username"])) {
             $command = match($command) {
-                'show-welcome', 'show-login', 'do-login', 'do-register' => $command,
+                'show-welcome', 'show-login', 'show-register', 'do-login', 'do-register' => $command,
                 default => 'show-welcome',
             };
         }
@@ -65,10 +65,6 @@ class SessionController {
             'do-create' => $this->doCreate(),
             'do-comment' => $this->doComment(),
             'do-delete' => $this->doDelete(),
-
-            'test-upload' => () {
-                
-            }
         };
     }
 
@@ -226,21 +222,32 @@ class SessionController {
     public function doCreate() {
         $title = $this->context["title"];
         $description = $this->context["description"];
-        $files = $_FILES['files'];
         $serial_ids = [];
-        // Handle files recieved from POST form
-        // foreach ($this->context["files"] as $file){
-        //     array_push($files, $file);
-        // }
         $tags = explode(" ", $this->context["tags"]);
 
-        foreach ($files as $object) {
-            $file_keys = $this->bucket->upload($object["name"]);
-            // Name is placeholder
+        $file_names = $_FILES['files']['name'];
+        $tmp_names = $_FILES['files']['tmp_name'];
+
+        for ($i = 0; $i < count($file_names); $i++) {
+            $file_name = $file_names[$i];
+            $tmp_name = $tmp_names[$i];
+            echo $file_name;
+            echo $tmp_name;
+            $upload_dir = 'uploads/';
+            $destination = $upload_dir . basename($file_name);   
+
+            if (!move_uploaded_file($tmp_name, $destination)) {
+                echo "Error uploading '{$file_name}'.<br>";
+            }
+
+            $file_path = __DIR__ . '/uploads/' . $file_name;
+            $upload_key = 'uploads/' . basename($file_path);
+
+            $file_keys = $this->bucket->upload($upload_key, $file_path);
             $serial_id_result = pg_query_params(
                 $this->db_connection,
-                "INSERT INTO project_file () VALUES ($1, $2, $3) RETURNING ID",
-                [$file_keys[0], $file_keys[1], $object['name']]);
+                "INSERT INTO project_file (aws_key, url, name) VALUES ($1, $2, $3) RETURNING ID",
+                [$file_keys[0], $file_keys[1], $file_name]);
             $serial_id = pg_fetch_all($serial_id_result)[0]["id"];
             
             array_push($serial_ids, $serial_id);
@@ -253,6 +260,7 @@ class SessionController {
                 
         $this->showResource($target_resource);
     }
+
 
     public function doSearch() {
         $query = $this->context["q"];
