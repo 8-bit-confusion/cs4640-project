@@ -17,7 +17,7 @@
     </head>
     <body class="page-fill-body flex-col" style="padding-bottom: 0px;">
         <header id="main-header" class="flex-row" style="justify-content: space-between; align-items: center;">
-            <a class="nav-main" href="./"><h1 style="font-weight: normal;">OpenLearn</h1></a>
+            <a class="nav-main" href="./?command=show-explore"><h1 style="font-weight: normal;">OpenLearn</h1></a>
             <nav>
                 <a href="./?command=show-profile" aria-label="Open profile">
                     <img class="profile-picture" src="styles/pfp.jpg" alt="Profile picture">
