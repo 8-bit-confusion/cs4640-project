@@ -101,6 +101,7 @@ class SessionController {
         $files = json_decode($resource_row['files_json'], true);
         if ($files === null) $files = [];
         $files_names = [];
+        $file_data = array();
 
         foreach ($files as $file_id) {
             $file_name_results = pg_query_params(
@@ -108,7 +109,7 @@ class SessionController {
                 "SELECT name FROM project_file WHERE id = $1",
                 [$file_id]);
             $file_name = pg_fetch_all($file_name_results)[0]["name"];
-            $file_names[] = $file_name;
+            array_push($file_data, [$file_name, $file_id]);
         }
         include './views/resource.php';
     }
@@ -308,7 +309,8 @@ class SessionController {
     }
 
     public function doDownload() {
-
+        $file_key = $this->context["file-key"];
+        $this->bucket->download($file_key);
     }
 }
 
