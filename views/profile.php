@@ -10,7 +10,7 @@
     <head>
         <title>Profile — OpenLearn</title>
         <meta charset="utf-8">
-        <meta name="author" content="Natalie Nguyen">
+        <meta name="author" content="OpenLearn">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="styles/main.css">
         <link rel="icon" type="image/png" href="styles/OpenLearnIcon.png">
@@ -18,14 +18,17 @@
 
     <body class="page-fill-body flex-col">
         <header id="main-header" class="flex-row" style="justify-content: space-between; align-items: center;">
-            <a class="nav-main" href="./index.html">
+            <a class="nav-main" href="?command=show-explore">
                 <h1 style="font-weight: normal">OpenLearn</h1>
             </a>
             <nav class="flex-row" style="align-items: center; gap: 16px;">
-                <a href="profile.html" aria-label="Open profile">
+                <a href="?command=show-profile" aria-label="Open profile">
                     <img class="profile-picture" src="styles/pfp.jpg" alt="Profile picture">
                 </a>
-                <a class="styled-button" href="welcome.html" aria-label="Log out of OpenLearn" style="padding: 8px 16px; font-size: 0.9rem;">
+                <span class="on-resource-card" style="opacity:.8;">
+                    <?= htmlspecialchars($_SESSION['display_name'] ?? $user['display_name'] ?? '') ?>
+                </span>
+                <a class="styled-button" href="?command=do-logout" aria-label="Log out of OpenLearn" style="padding: 8px 16px; font-size: 0.9rem;">
                     Log out
                 </a>
             </nav>
@@ -41,15 +44,25 @@
                     <img src="styles/pfp.jpg" alt="User profile picture placeholder"
                         style="width: 96px; height: 96px; border-radius: 9999px; object-fit: cover;">
 
-                    <form class="flex-col" method="post" style="gap: 16px;">
+                    <?php if (!empty($flashMessage)): ?>
+                        <div class="flash" style="color:#155724;background:#d4edda;border:1px solid #c3e6cb;padding:8px;border-radius:6px;">
+                            <?= htmlspecialchars($flashMessage) ?>
+                        </div>
+                    <?php endif; ?>
+                    <form class="flex-col" method="post" action="?command=do-update-profile" style="gap: 16px;">
+                        <input type="hidden" name="username" value="<?= htmlspecialchars($user['username']) ?>">
                         <div class="div-input">
                             <label for="pf-display">Display name</label><br>
-                            <input class="register-input" type="text" id="pf-display" name="display_name" required placeholder="Natalie Nguyen">
+                            <input class="register-input" type="text" id="pf-display" name="display_name" required maxlength="80" value="<?= htmlspecialchars($user['display_name']) ?>" placeholder="Your display name">
                         </div>
 
                         <div class="div-input">
                             <label for="pf-username">Username</label><br>
-                            <input class="register-input" type="text" id="pf-username" name="username" required placeholder="@natalie" autocomplete="username">
+                            <input class="register-input"
+                                type="text"
+                                id="pf-username"
+                                value="<?= '@' . htmlspecialchars($user['username']) ?>"
+                                readonly>
                         </div>
 
                         <div class="div-input">
@@ -64,32 +77,33 @@
 
             <!-- contributed resources section -->
             <section class="flex-col" aria-labelledby="contrib-heading" style="flex: 2; gap: 16px;">
-                <a class="styled-button" href="create.html" style="align-self: center; text-align: center; display: inline-block;">
+                <a class="styled-button" href="?command=show-create" style="align-self: center; text-align: center; display: inline-block;">
                     Create New Resource
                 </a>
                 <h2 id="contrib-heading" style="margin-top: 8px;">Contributed Resources</h2>
 
-                <!-- placeholder : resource card 1 -->
-                <article class="resource-card flex-col" style="position: relative;">
-                    <img class="resource-preview" src="styles/img-preview.jpg" alt="Resource preview">
-                    <div class="card-title-row flex-row">
-                        <h3 id="res1-title" class="on-resource-card" style="flex-grow: 1;">Intro to Calculus - Notes</h3>
-                        <span class="on-resource-card resource-downloads">128</span>
-                        <img class="download-icon" src="styles/download-icon.svg" alt="downloads">
-                    </div>
-                    <a href="resource.html" class="card-link" aria-label="Open resource: Intro to Calculus - Notes"></a>
-                </article>
+                <?php if (!empty($resources)): ?>
+                    <?php foreach ($resources as $resource): ?>
+                        <article class="resource-card flex-col" style="position: relative;">
+                            <img class="resource-preview" src="styles/img-preview.jpg" alt="Resource preview">
+                            <div class="card-title-row flex-row">
+                                <h3 class="on-resource-card" style="flex-grow: 1;">
+                                    <?= htmlspecialchars($resource['title']) ?>
+                                </h3>
+                                <span class="on-resource-card resource-downloads">
+                                    <?= htmlspecialchars($resource['download_count']) ?>
+                                </span>
+                                <img class="download-icon" src="styles/download-icon.svg" alt="downloads">
+                            </div>
+                            <a href="?command=show-resource&target_resource=<?= urlencode($resource['id']) ?>"
+                            class="card-link"
+                            aria-label="Open resource: <?= htmlspecialchars($resource['title']) ?>"></a>
+                        </article>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <p style="opacity:.7;">You haven’t uploaded any resources yet.</p>
+                <?php endif; ?>
 
-                <!-- placeholder : resource card 2 -->
-                <article class="resource-card flex-col" style="position: relative;">
-                    <img class="resource-preview" src="styles/img-preview.jpg" alt="Resource preview">
-                    <div class="card-title-row flex-row">
-                        <h3 id="res2-title" class="on-resource-card" style="flex-grow: 1;">Physics Cheat Sheet</h3>
-                        <span class="on-resource-card resource-downloads">76</span>
-                        <img class="download-icon" src="styles/download-icon.svg" alt="downloads">
-                    </div>
-                    <a href="resource.html" class="card-link" aria-label="Open resource: Physics Cheat Sheet"></a>
-                </article>
             </section>
         </main>
     </body>

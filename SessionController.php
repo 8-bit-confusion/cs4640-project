@@ -65,6 +65,8 @@ class SessionController {
             'do-create' => $this->doCreate(),
             'do-comment' => $this->doComment(),
             'do-delete' => $this->doDelete(),
+            'do-update-profile' => $this->doUpdateProfile(),
+            'do-logout' => session_destroy() && $this->showWelcome(),
         };
     }
 
@@ -113,7 +115,27 @@ class SessionController {
         include './views/resource.php';
     }
 
-    public function showProfile() {
+    public function showProfile($message = "") {
+        $res = pg_query_params(
+            $this->db_connection,
+            "SELECT username, display_name
+            FROM project_user
+            WHERE username = $1",
+            [$_SESSION['username']]
+        );
+        $user = pg_fetch_assoc($res) ?: [
+            'username'     => $_SESSION['username'],
+            'display_name' => $_SESSION['display_name'] ?? ''
+        ];
+
+        $resources_result = pg_query_params(
+            $this->db_connection,
+            "SELECT id, title, download_count FROM project_resource WHERE author = $1 ORDER BY id DESC",
+            [$_SESSION['username']]
+        );
+        $resources = pg_fetch_all($resources_result) ?: [];
+
+        $flashMessage = $message;
         include './views/profile.php';
     }
 
@@ -308,6 +330,43 @@ class SessionController {
     public function doDownload() {
 
     }
+
+    public function doUpdateProfile() {
+        $sessionUser = $_SESSION["username"];
+        $formUser = trim($this->context["username"] ?? '');
+        $newDisplay = trim($this->context["display_name"] ?? '');
+
+        if ($formUser !== $sessionUser) {
+            $this->showProfile("You can only update your own profile.");
+            return;
+        }
+
+        if ($newDisplay === '') {
+            $this->showProfile("Display name is required.");
+            return;
+        }
+
+        if (mb_strlen($newDisplay) > 100) {
+            $this->showProfile("Display name is too long (maximum 100 characters).");
+            return;
+        }
+
+        $ok = pg_query_params(
+            $this->db_connection,
+            "UPDATE project_user SET display_name = $1 WHERE username = $2",
+            [$newDisplay, $sessionUser]
+        );
+        
+        if ($ok === false) {
+            $this->showProfile("Failed to save changes.");
+            return;
+        }
+
+        $_SESSION["display_name"] = $newDisplay;
+
+        $this->showProfile("Profile updated successfully.");
+
+    }   
 }
 
 /*

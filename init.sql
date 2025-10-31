@@ -14,9 +14,9 @@ CREATE TABLE project_resource (
     author TEXT NOT NULL REFERENCES project_user(username) ON DELETE CASCADE,
     title TEXT NOT NULL, -- 120 char
     body TEXT NOT NULL, -- 500 char
-    tags TEXT[] NOT NULL DEFAULT '{}', -- no spaces, lowercase
+    tags JSONB NOT NULL DEFAULT '[]'::jsonb, -- no spaces, lowercase
     download_count INT NOT NULL,
-    files INT[] NOT NULL
+    files JSONB NOT NULL DEFAULT '[]'::jsonb
 );
 
 CREATE TABLE project_comment (
@@ -34,14 +34,13 @@ CREATE TABLE project_file (
     name TEXT NOT NULL
 );
 
-
 CREATE OR REPLACE FUNCTION project_find_resource_by_tag(search_tag TEXT)
 RETURNS TABLE(id INT, title TEXT, author TEXT, download_count INT)
 AS $$
 BEGIN
     RETURN QUERY --returns the result
     SELECT r.id, r.title, r.author, r.download_count FROM project_resource AS r
-    WHERE r.tags && regexp_split_to_array(search_tag, '[ ,]+');
+    WHERE r.tags ?| regexp_split_to_array(lower(search_tag), '[ ,]+');
 END;
 $$ LANGUAGE plpgsql;
 
