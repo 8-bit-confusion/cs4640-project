@@ -55,5 +55,10 @@ RETURNS JSON AS $$
 END;
 $$ LANGUAGE plpgsql;
 
+CREATE OR REPLACE FUNCTION array_to_json(somearray)
+RETURNS JSON AS $$
+    SELECT to_json($1);
+$$ LANGUAGE sql IMMUTABLE;
+
 INSERT INTO project_user(username, display_name, password_hash) VALUES('a', 'a', 'a');
 INSERT INTO project_resource(author, title, body, tags, download_count, files) VALUES('a', 'test title', 'test body', '{"tag_a", "tag_b"}', 0, '{}');
