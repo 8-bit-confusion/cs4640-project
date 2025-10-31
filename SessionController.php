@@ -1,14 +1,19 @@
 <?php
 
-class AnagramsGameController {
+class SessionController {
     private $db_connection;
     private $context;
+    private $bucket;
 
     public function __construct() {
         session_start();
-
         // change to ::$server_db when deploying
-        $db_config = DBConfig::$local_db;
+        $config = new Config("./.env");
+
+        // AWS S3 Bucket setup
+        $this->bucket = new Bucket($config);
+        
+        $db_config = $config->local_db();
 
         $host = $db_config["host"];
         $user = $db_config["user"];
@@ -23,6 +28,7 @@ class AnagramsGameController {
             'GET' => $_GET,
             'POST' => $_POST,
         };
+
     }
 
     public function run() {
@@ -47,14 +53,22 @@ class AnagramsGameController {
             'show-register' => $this->showRegister(),
 
             'show-resource' => $this->showResource($this->context["target_resource"]),
-            'show-profile' => $this->showProfile($_SESSION["username"]),
+            'show-profile' => $this->showProfile(),
             'show-create' => $this->showCreate(),
             'show-explore' => $this->showExplore(),
+            'show-search' => $this->showSearch(),
             
             // process commands
             'do-login' => $this->doLogin(),
-            'do-register' => $this->doRegsiter(),
+            'do-register' => $this->doRegister(),
             'do-search' => $this->doSearch(),
+            'do-create' => $this->doCreate(),
+            'do-comment' => $this->doComment(),
+            'do-delete' => $this->doDelete(),
+
+            'test-upload' => () {
+                
+            }
         };
     }
 
@@ -65,11 +79,55 @@ class AnagramsGameController {
     // at a chosen point on the page, rather than just echoing it at the
     // top or bottom of the <body> tag.
     public function showWelcome($message = "") {
-        include './views/welcome.html'; // TODO: change to .php
+        include './views/welcome.php';
     }
 
     public function showRegister($message = "") {
-        include './views/register.html'; // TODO: change to .php
+        include './views/register.php';
+    }
+
+    public function showResource($target_resource) {
+        $resource_data_result = pg_query_params(
+            $this->db_connection,
+            "SELECT id, title, author, body, tags, download_count, to_json(files) AS files_json FROM project_resource WHERE id = ($1)",
+            [$target_resource]);
+        // $resource_data = pg_fetch_all($resource_data_result)[0];
+        // $file_names = [];
+        
+        // $files = explode(',', substr($resource_data["files"], 1, strlen($resource_data["files"]) - 2));
+        // if (count($files) == 1 && $files[0] == '') $files = [];
+        $resource_row = pg_fetch_assoc($resource_data_result);
+        $resource_data = $resource_row;
+
+        $files = json_decode($resource_row['files_json'], true);
+        if ($files === null) $files = [];
+        $files_names = [];
+
+        foreach ($files as $file_id) {
+            $file_name_results = pg_query_params(
+                $this->db_connection,
+                "SELECT name FROM project_file WHERE id = $1",
+                [$file_id]);
+            $file_name = pg_fetch_all($file_name_results)[0]["name"];
+            $file_names[] = $file_name;
+        }
+        include './views/resource.php';
+    }
+
+    public function showProfile() {
+        include './views/profile.php';
+    }
+
+    public function showCreate() {
+        include './views/create.php';
+    }
+
+    public function showExplore() {
+        include './views/explore.php';
+    }
+
+    public function showSearch() {
+        include './views/search.php';
     }
 
     // PROCESS COMMAND FUNCTIONS ###################################################################################
@@ -81,7 +139,7 @@ class AnagramsGameController {
         // check the database to see if this username exists
         $user_in_db_result = pg_query_params(
             $this->db_connection,
-            "SELECT username FROM project_users WHERE project_users.username = $1",
+            "SELECT username FROM project_user WHERE project_user.username = $1",
             [$username]);
         $user_in_db = pg_fetch_all($user_in_db_result);
 
@@ -95,7 +153,7 @@ class AnagramsGameController {
         // check the database for the hash of this user's password
         $db_hash_result = pg_query_params(
             $this->db_connection,
-            "SELECT password_hash FROM project_users WHERE username = $1",
+            "SELECT password_hash FROM project_user WHERE username = $1",
             [$username]);
         $db_hash = pg_fetch_all($db_hash_result)[0]["password_hash"];
 
@@ -111,7 +169,7 @@ class AnagramsGameController {
         // in the dynamic views
         $display_name_result = pg_query_params(
             $this->db_connection,
-            "SELECT display_name FROM project_users WHERE username = $1",
+            "SELECT display_name FROM project_user WHERE username = $1",
             [$username]);
         $display_name = pg_fetch_all($display_name_result)[0]["display_name"];
 
@@ -124,9 +182,9 @@ class AnagramsGameController {
 
     public function doRegister() {
         $username = $this->context["username"];
-        $display_name = $this->context["displayName"];
-        $password = $this->context["password"];
-        $confirm_password = $this->context["confirmPassword"];
+        $display_name = $this->context["display_name"];
+        $password = $this->context["pwd"];
+        $confirm_password = $this->context["retype_pwd"];
 
         // if the inputted passwords don't match each other, display
         // an error and navigate back to the register page
@@ -138,9 +196,9 @@ class AnagramsGameController {
         // check the database to see if the username is taken
         $user_in_db_result = pg_query_params(
             $this->db_connection,
-            "SELECT username FROM project_users WHERE project_users.username = $1",
+            "SELECT username FROM project_user WHERE project_user.username = $1",
             [$username]);
-        $user_in_db = pg_fetch_all($email_in_db_result);
+        $user_in_db = pg_fetch_all($user_in_db_result);
 
         // if the username is already in use, display an error and
         // navigate back to the register page
@@ -155,15 +213,100 @@ class AnagramsGameController {
         $password_hash = password_hash($password, PASSWORD_BCRYPT);
         pg_query_params(
             $this->db_connection,
-            "INSERT INTO project_users (username, display_name, password_hash) VALUES ($1, $2, $3)",
+            "INSERT INTO project_user (username, display_name, password_hash) VALUES ($1, $2, $3)",
             [$username, $display_name, $password_hash]);
 
         $_SESSION["username"] = $username;
-        $_SESSION["display_name"] = $displayName;
+        $_SESSION["display_name"] = $display_name;
 
         // default to the explore page after registering
         $this->showExplore();
     }
+
+    public function doCreate() {
+        $title = $this->context["title"];
+        $description = $this->context["description"];
+        $files = $_FILES['files'];
+        $serial_ids = [];
+        // Handle files recieved from POST form
+        // foreach ($this->context["files"] as $file){
+        //     array_push($files, $file);
+        // }
+        $tags = explode(" ", $this->context["tags"]);
+
+        foreach ($files as $object) {
+            $file_keys = $this->bucket->upload($object["name"]);
+            // Name is placeholder
+            $serial_id_result = pg_query_params(
+                $this->db_connection,
+                "INSERT INTO project_file () VALUES ($1, $2, $3) RETURNING ID",
+                [$file_keys[0], $file_keys[1], $object['name']]);
+            $serial_id = pg_fetch_all($serial_id_result)[0]["id"];
+            
+            array_push($serial_ids, $serial_id);
+        }
+        $target_resource_result = pg_query_params(
+            $this->db_connection,
+            "INSERT INTO project_resource (author, title, body, tags, download_count, files) VALUES ($1, $2, $3, $4, 0, $5) RETURNING ID",
+            [$_SESSION["username"], $title, $description, $tags, $serial_ids]);
+        $target_resource = pg_fetch_all($target_resource_result)[0]["id"];
+                
+        $this->showResource($target_resource);
+    }
+
+    public function doSearch() {
+        $query = $this->context["q"];
+
+        $search_results_result = pg_query_params(
+            $this->db_connection,
+            "SELECT * FROM project_find_resource_by_tag($1)",
+            [$query]);
+        $search_results = pg_fetch_all($search_results_result);
+        include './views/search.php';
+    }
+
+    public function doDelete() {
+        $resource = $this->context['target_resource'];
+        $file_ids_result = pg_query_params(
+            $this->db_connection,
+            "SELECT files FROM project_resource WHERE id = ($1)",
+            [$resource]);
+        // $file_ids = pg_fetch_all($file_ids_result)[0]["files"];
+
+        // $file_ids = explode(',', substr($file_ids, 1, strlen($file_ids) - 2));
+        // if (count($file_ids) == 1 && $file_ids[0] == '') $file_ids = [];
+        $row = pg_fetch_assoc($file_ids_result);
+        $file_ids=json_decode($row['file_ids'], true);
+        if ($file_ids === null) $file_ids = [];
+
+        foreach ($file_ids as $file_id) {
+            $file_key = pg_query_params(
+                $this->db_connection,
+                "SELECT s3_key FROM project_file WHERE id = ($1)",
+                [$file_id]);
+            this->bucket->delete($file_key);
+        }
+        pg_query_params(
+            $this->db_connection,
+            "DELETE FROM project_resource WHERE id = ($1)",
+            [$resource]);
+        
+        $this->showExplore();
+    }
+
+    public function doDownload() {
+
+    }
 }
+
+/*
+
+for (file in from_result) {
+    pg_query(insert file into files table) ----> puts file record at some serial id
+}
+
+pg_query(insert resource with files $1, [[file_id_1, file_id_2]])
+
+*/
 
 ?>

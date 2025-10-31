@@ -32,9 +32,9 @@
 
         </header>
 
-        <main class="flex-row" style="flex: 1; gap: 24px; padding: 16px;">
+        <main class="flex-row profile-layout" style="flex: 1; gap: 24px; padding: 16px;">
             <!-- pfp info section -->
-            <section class="flex-col" aria-labelledby="profile-heading" style="flex: 1; min-width: 280px; max-width: 420px; gap: 16px;">
+            <section class="flex-col" aria-labelledby="profile-heading" style="flex: 1; gap: 16px;">
                 <div class="resource-card flex-col" style="gap: 16px; padding: 24px;">
                     <h2 id="profile-heading" style="margin: 0;">Your Profile</h2>
 

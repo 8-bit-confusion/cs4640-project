@@ -17,12 +17,13 @@
     </head>
     <body class="flex-col page-fill-body" style="background-color: var(--surface);">
         <header id="main-header" class="flex-row" style="justify-content: space-between; align-items: center;">
-            <a class="nav-main" href="./welcome.html"><h1 style="font-weight: normal;">OpenLearn</h1></a>
+            <a class="nav-main" href="./?command=show-welcome"><h1 style="font-weight: normal;">OpenLearn</h1></a>
         </header>
         <div class="flex-row register" style="flex-grow: 1;">
             <div class="create-account">
                 <h1> Create an OpenLearn Account </h1>
                 <form class="flex-col register-form" method="post">
+                    <input type="hidden" name="command" value="do-register">
                     <div class="div-input">
                         <label for="username">Username</label><br>
                         <input class="register-input" type="text" id="username" name="username" required>

@@ -19,57 +19,56 @@
         <header id="main-header" class="flex-row" style="justify-content: space-between; align-items: center;">
             <a class="nav-main" href="./"><h1 style="font-weight: normal;">OpenLearn</h1></a>
             <nav>
-                <a href="profile.html" aria-label="Open profile">
+                <a href="./?command=show-profile" aria-label="Open profile">
                     <img class="profile-picture" src="styles/pfp.jpg" alt="Profile picture">
                 </a>
             </nav>
         </header>
+        <div>
+            <form>
+                <input type="hidden" name="target_resource" value="<?php echo $target_resource ?>">
+                <input type="hidden" name="command" value="do-delete">
+                <button style="background-color:red;" type="submit">Delete Resource</button>
+            </form>
+        </div>
         <div class="flex-row resource-view-container">
             <div class="spacing"></div>
             <div class="resource-view flex-col">
                 <div class="title-bar-container flex-row">
-                    <span style="font-size: 48px;">Resource Title</span>
+                    <span style="font-size: 48px;"><?php echo $resource_data["title"] ?></span>
                     <div class="flex-row" style="gap: 10px;">
                         <span style="font-size: 24px;">###</span>
+                        <!-- Download entire resource not yet implemented -->
                         <img class="download-icon-large" src="styles/download-icon.svg" alt="downloads">
                     </div>
                 </div>
                 <span>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                    sed do eiusmod tempor incididunt ut labore et dolore magna
-                    aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-                    ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                    <br><br>
-                    Duis aute irure dolor in reprehenderit in voluptate velit
-                    esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
-                    occaecat cupidatat non proident, sunt in culpa qui officia
-                    deserunt mollit anim id est laborum.
+                    <?php echo $target_resource["body"];?>
                 </span>
                 <img class="preview" src="styles/img-preview.jpg" alt="Image preview">
                 <div class="outline-section flex-col">
                     <div class="styled-file">
+                        <?php foreach ($file_names as $name) { ?>
                         <img style="height:20px;justify-self:left;" src="styles/attach-file-icon.png" alt="File attachment icon">
-                        <span style="flex-grow: 1">uploaded_file.pdf</span>
+                        <span style="flex-grow: 1"><?php echo $name ?></span>
                         <button id="rv-download-button" class="flex-col icon-button" aria-label="Download file" type="button">
                             <img src="styles/download-icon.svg" alt="Download icon">
                         </button>
+                        <?php } ?>
                     </div>
                 </div>
                 <div class="flex-row tags">
+                <?php foreach ($target_resource["tags"] as $tag) { ?>
                     <div class="tag flex-row">
-                        <span>tag1</span>
+                        <span><?php echo $tag ?></span>
                     </div>
-                    <div class="tag flex-row">
-                        <span>tag2</span>
-                    </div>
-                    <div class="tag flex-row">
-                        <span>tag3</span>
-                    </div>
+                <?php } ?>
                 </div>
             </div>
             <div class="resource-comments flex-col">
                 <span style="font-size: 36px; height: 42px;">Comments</span>
                 <form class="div-input flex-col" style="gap: 10px; align-items: end; padding-bottom: 10px;" method="post">
+                    <input type="hidden" name="command" value="do-comment">
                     <textarea class="register-input comment-input" rows="4" name="comment" aria-label="Comment entry field" required></textarea>
                     <button class="styled-button" type="submit">Post comment</button>
                 </form>

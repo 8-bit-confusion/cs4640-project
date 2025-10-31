@@ -24,16 +24,16 @@
         </header>
 
         <!-- main content: two-column (desktop) / stacked (mobile) -->
-        <main class="flex-row" style="flex: 1; align-items: center; justify-content: center; gap: 32px; padding: 16px;">
+        <main class="flex-row welcome-layout" style="flex: 1; gap: 32px; padding: 16px;">
             <section class="flex-col" aria-label="Brand">
-                <div class="resource-card flex-col" style="align-items: center; justify-content: center; padding: 24px; width: min(520px, 90vw);">
+                <div class="resource-card flex-col" style="align-items: center; justify-content: center; padding: 24px;">
                     <!-- empty alt for screen readers -->
-                    <img src="styles/OpenLearnLogo.png" alt="" style="max-width: 100%; height: auto;">
+                    <img src="./styles/OpenLearnLogo.png" alt="" style="max-width: 100%; height: auto;">
                 </div>
             </section>
 
             <!-- login -->
-            <section class="flex-col" aria-labelledby="welcome-title" style="width: min(520px, 90vw); gap: 16px;">
+            <section class="flex-col" aria-labelledby="welcome-title" style="gap: 16px;">
                 <h2 id="welcome-title" style="margin: 0;">Welcome to OpenLearn</h2>
                 <p class="on-secondary-surface" style="margin: 0;">
                     Discover and share learning resources with the OpenLearn community.

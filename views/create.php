@@ -1,9 +1,10 @@
 <!--
-    OpenLearn — Sprint 2 (Static)
-    Authors: Natalie Nguyen, Lilli Hrncir, Lily Wasko
-    Course: CS 4640 (Fall 2025)
-    Deployed URL: https://cs4640.cs.virginia.edu/gzg8pf/project-static/
+OpenLearn — Sprint 2 (Static)
+Authors: Natalie Nguyen, Lilli Hrncir, Lily Wasko
+Course: CS 4640 (Fall 2025)
+Deployed URL: https://cs4640.cs.virginia.edu/gzg8pf/project-static/
 -->
+
     
 <!DOCTYPE html>
 <html lang="en">
@@ -25,7 +26,8 @@
         </header>
         <div class="flex-row center" style="flex-grow: 1;">
             <div class="flex-col" style="max-height:75%;min-width: min-content;min-height: min-content;max-width: 55%;width: -webkit-fill-available;">
-                <form class="flex-col center" method="post">
+                <form class="flex-col center" enctype="multipart/form-data" method="post">
+                    <input type="hidden" name="command" value="do-create">
                     <div class="div-input">
                         <label for="resource-title">Title</label><br>
                         <input class="register-input" style="font-size:x-large;" name="title" id="resource-title" required>
@@ -43,7 +45,7 @@
                         </div>
                         <div style="display:flex;flex-direction:row-reverse;">
                             <label for="resource-files" class="custom-file-upload">Upload Files</label><br>
-                            <input class="register-input" type="file" name="files" id="resource-files" required>
+                            <input class="register-input" type="file" name="files[]" id="resource-files" multiple required>
                         </div>
                     </div>
                     <div class="tag-container">

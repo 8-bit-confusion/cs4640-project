@@ -69,7 +69,6 @@ button:hover {
 }
 
 #search-bar-form {
-    position: relative;
     width: max(40%, min(348px, calc(100% - 32px)));
 }
 
@@ -126,6 +125,10 @@ button:hover {
     border-radius: 24px;
     padding: 16px;
     gap: 24px;
+
+    width: 1002px;
+    height: 229px;
+    box-sizing: border-box;
 }
 
 .resource-card {
@@ -134,9 +137,6 @@ button:hover {
     background-color: var(--secondary-surface);
     position: relative;
 
-    &:has(> .card-link:hover) {
-        transform: scale(1.02);
-    }
 }
 
 .resource-preview {
@@ -383,6 +383,31 @@ input[type="file"] {
         padding: 0px 16px;
         margin-bottom: 64px;
     }
+
+    .welcome-layout {
+        flex-direction:column;
+        gap: 20px;
+        align-items: stretch !important; /* override center alignment from inline style in welcome.html if any remain*/
+    }
+    /* override welcome layout sections to be full width on smaller screens */
+    .welcome-layout > section {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+    }
+
+    .profile-layout {
+        flex-direction:column;
+        gap: 20px;
+        align-items: stretch;
+    }
+    /* override profile layout sections to be full width on smaller screens */
+    .profile-layout > section {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+    }
+
 }
 
 @media only screen and (max-width: 548px) {
