@@ -42,7 +42,7 @@ class SessionController {
         // if the command is something else, change it to showing the welcome page.
         if (!isset($_SESSION["username"])) {
             $command = match($command) {
-                'show-welcome', 'show-login', 'show-register', 'do-login', 'do-register' => $command,
+                'show-welcome', 'show-register', 'do-login', 'do-register' => $command,
                 default => 'show-welcome',
             };
         }
@@ -85,7 +85,10 @@ class SessionController {
     public function showResource($target_resource) {
         $resource_data_result = pg_query_params(
             $this->db_connection,
-            "SELECT id, title, author, body, tags, download_count, to_json(files) AS files_json FROM project_resource WHERE id = ($1)",
+            "SELECT id, title, author, body, tags, download_count, array_to_json(files) 
+            AS files_json 
+            FROM project_resource 
+            WHERE id = ($1)",
             [$target_resource]);
         // $resource_data = pg_fetch_all($resource_data_result)[0];
         // $file_names = [];

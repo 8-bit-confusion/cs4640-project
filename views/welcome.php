@@ -18,7 +18,7 @@
 
     <body class="page-fill-body flex-col">
         <header id="main-header" class="flex-row" style="justify-content: space-between; align-items: center;">
-            <a class="nav-main" href="./welcome.html">
+            <a class="nav-main" href="?command=show-welcome">
                 <h1 style="font-weight: normal">OpenLearn</h1>
             </a>
         </header>
@@ -40,6 +40,7 @@
                 </p>
 
                 <form class="flex-col" method="post" style="gap: 16px; margin-top: 8px;">
+                    <input type="hidden" name="command" value="do-login">
                     <div class="div-input">
                         <label for="wl-username">Username or email</label><br>
                         <input
@@ -69,9 +70,7 @@
                     </button>
 
                     <div class="flex-row" style="gap: 16px; align-items: center;">
-                        <a class="link-button" href="register.html">Create account</a>
-                        <!-- TBD!!! -->
-                        <a class="link-button" href="#">Forgot password?</a>
+                        <a class="link-button" href="?command=show-register">Create account</a>
                     </div>
                 </form>
 
