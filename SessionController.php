@@ -103,6 +103,7 @@ class SessionController {
         $files = json_decode($resource_row['files_json'], true);
         if ($files === null) $files = [];
         $files_names = [];
+        $file_data = array();
 
         foreach ($files as $file_id) {
             $file_name_results = pg_query_params(
@@ -110,7 +111,7 @@ class SessionController {
                 "SELECT name FROM project_file WHERE id = $1",
                 [$file_id]);
             $file_name = pg_fetch_all($file_name_results)[0]["name"];
-            $file_names[] = $file_name;
+            array_push($file_data, [$file_name, $file_id]);
         }
         include './views/resource.php';
     }
@@ -249,15 +250,12 @@ class SessionController {
         $description = $this->context["description"];
         $serial_ids = [];
         $tags = explode(" ", $this->context["tags"]);
-
         $file_names = $_FILES['files']['name'];
         $tmp_names = $_FILES['files']['tmp_name'];
 
         for ($i = 0; $i < count($file_names); $i++) {
             $file_name = $file_names[$i];
             $tmp_name = $tmp_names[$i];
-            echo $file_name;
-            echo $tmp_name;
             $upload_dir = 'uploads/';
             $destination = $upload_dir . basename($file_name);   
 
@@ -266,21 +264,26 @@ class SessionController {
             }
 
             $file_path = __DIR__ . '/uploads/' . $file_name;
-            $upload_key = 'uploads/' . basename($file_path);
+            $upload_key = $upload_dir . basename($file_path);
 
             $file_keys = $this->bucket->upload($upload_key, $file_path);
             $serial_id_result = pg_query_params(
                 $this->db_connection,
-                "INSERT INTO project_file (aws_key, url, name) VALUES ($1, $2, $3) RETURNING ID",
+                "INSERT INTO project_file (aws_key, url, name) VALUES ($1, $2, $3) RETURNING id",
                 [$file_keys[0], $file_keys[1], $file_name]);
             $serial_id = pg_fetch_all($serial_id_result)[0]["id"];
             
             array_push($serial_ids, $serial_id);
         }
+
         $target_resource_result = pg_query_params(
             $this->db_connection,
-            "INSERT INTO project_resource (author, title, body, tags, download_count, files) VALUES ($1, $2, $3, $4, 0, $5) RETURNING ID",
-            [$_SESSION["username"], $title, $description, $tags, $serial_ids]);
+            "INSERT INTO project_resource (author, title, body, tags, download_count, files) VALUES ($1, $2, $3, $4, 0, $5) RETURNING id",
+            [$_SESSION["username"], $title, $description, json_encode($tags), json_encode($serial_ids)]);
+        if (!$target_resource_result) {
+            echo "Failed to insert new resource";
+            return;
+        }
         $target_resource = pg_fetch_all($target_resource_result)[0]["id"];
                 
         $this->showResource($target_resource);
@@ -328,7 +331,8 @@ class SessionController {
     }
 
     public function doDownload() {
-
+        $file_key = $this->context["file-key"];
+        $this->bucket->download($file_key);
     }
 
     public function doUpdateProfile() {

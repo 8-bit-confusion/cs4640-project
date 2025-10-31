@@ -48,17 +48,21 @@
                 <img class="preview" src="styles/img-preview.jpg" alt="Image preview">
                 <div class="outline-section flex-col">
                     <div class="styled-file">
-                        <?php foreach ($file_names as $name) { ?>
+                        <?php for ( $i = 0; $i < count($file_data); $i++) { ?>
                         <img style="height:20px;justify-self:left;" src="styles/attach-file-icon.png" alt="File attachment icon">
-                        <span style="flex-grow: 1"><?php echo $name ?></span>
-                        <button id="rv-download-button" class="flex-col icon-button" aria-label="Download file" type="button">
-                            <img src="styles/download-icon.svg" alt="Download icon">
-                        </button>
+                        <span style="flex-grow: 1"><?php echo $file_data[$i][0]; ?></span>
+                        <form>
+                            <input type="hidden" name="command" value="do-download">
+                            <input type="hidden" name="file-key" value="<?php echo $$file_data[$i][1]; ?>">
+                            <button id="rv-download-button" class="flex-col icon-button" aria-label="Download file" type="button">
+                                <img src="styles/download-icon.svg" alt="Download icon">
+                            </button>
+                        </form>
                         <?php } ?>
                     </div>
                 </div>
                 <div class="flex-row tags">
-                <?php foreach ($target_resource["tags"] as $tag) { ?>
+                <?php foreach (json_decode($target_resource["tags"]) as $tag) { ?>
                     <div class="tag flex-row">
                         <span><?php echo $tag ?></span>
                     </div>
