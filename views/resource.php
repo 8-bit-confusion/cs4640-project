@@ -43,7 +43,7 @@
                     </div>
                 </div>
                 <span>
-                    <?php echo $target_resource["body"];?>
+                    <?php echo $resource_data["body"];?>
                 </span>
                 <img class="preview" src="styles/img-preview.jpg" alt="Image preview">
                 <div class="outline-section flex-col">
@@ -62,7 +62,7 @@
                     </div>
                 </div>
                 <div class="flex-row tags">
-                <?php foreach (json_decode($target_resource["tags"]) as $tag) { ?>
+                <?php foreach ($tags as $tag) { ?>
                     <div class="tag flex-row">
                         <span><?php echo $tag ?></span>
                     </div>

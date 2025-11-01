@@ -87,8 +87,7 @@ class SessionController {
     public function showResource($target_resource) {
         $resource_data_result = pg_query_params(
             $this->db_connection,
-            "SELECT id, title, author, body, tags, download_count, array_to_json(files) 
-            AS files_json 
+            "SELECT id, title, author, body, tags, download_count, files
             FROM project_resource 
             WHERE id = ($1)",
             [$target_resource]);
@@ -100,7 +99,8 @@ class SessionController {
         $resource_row = pg_fetch_assoc($resource_data_result);
         $resource_data = $resource_row;
 
-        $files = json_decode($resource_row['files_json'], true);
+        $tags = json_decode($resource_row['tags'], true);
+        $files = json_decode($resource_row['files'], true);
         if ($files === null) $files = [];
         $files_names = [];
         $file_data = array();
@@ -250,6 +250,7 @@ class SessionController {
         $description = $this->context["description"];
         $serial_ids = [];
         $tags = explode(" ", $this->context["tags"]);
+
         $file_names = $_FILES['files']['name'];
         $tmp_names = $_FILES['files']['tmp_name'];
 
