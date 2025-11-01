@@ -42,22 +42,47 @@
                 <div class="browse-section flex-col">
                     <h2 style="font-weight: normal;">Most downloaded</h2>
                     <div class="browse-row flex-row">
-                        <div class="resource-card flex-col">
-                            <img class="resource-preview" src="./styles/img-preview.jpg" alt="resource preview">
-                            <div class="card-title-row flex-row">
-                                <span class="on-resource-card" style="flex-grow: 1;">Resource title</span>
-                                <span class="on-resource-card resource-downloads">###</span>
-                                <img class="download-icon" src="./styles/download-icon.svg" alt="downloads">
-                            </div>
-                            <a href="resource.html" class="card-link" aria-label="resource link"></a>
-                        </div>
-                        
+                        <?php
+                            foreach ($popular_four as $result) {
+                                $result_id = $result["id"];
+                                echo "
+                                <div>
+                                <div class=\"resource-card flex-col\">
+                                    <img class=\"resource-preview\" src=\"./styles/img-preview.jpg\" alt=\"resource preview\">
+                                    <div class=\"card-title-row flex-row\">
+                                        <span class=\"on-resource-card\" style=\"flex-grow: 1;\">{$result["title"]}</span>
+                                        <span class=\"on-resource-card resource-downloads\">{$result["download_count"]}</span>
+                                        <img class=\"download-icon\" src=\"./styles/download-icon.svg\" alt=\"downloads\">
+                                    </div>
+                                    <a href=\"?command=show-resource&target_resource=$result_id\" class=\"card-link\" aria-label=\"resource link\"></a>
+                                </div>
+                                </div>
+                                ";
+                            }
+                        ?>
                     </div>
                 </div>
                 <div class="browse-section flex-col">
                     <h2 style="font-weight: normal;">Recently uploaded</h2>
                     <div class="browse-row flex-row">
-                        
+                        <?php
+                            foreach ($recent_four as $result) {
+                                $result_id = $result["id"];
+                                echo "
+                                <div>
+                                <div class=\"resource-card flex-col\">
+                                    <img class=\"resource-preview\" src=\"./styles/img-preview.jpg\" alt=\"resource preview\">
+                                    <div class=\"card-title-row flex-row\">
+                                        <span class=\"on-resource-card\" style=\"flex-grow: 1;\">{$result["title"]}</span>
+                                        <span class=\"on-resource-card resource-downloads\">{$result["download_count"]}</span>
+                                        <img class=\"download-icon\" src=\"./styles/download-icon.svg\" alt=\"downloads\">
+                                    </div>
+                                    <a href=\"?command=show-resource&target_resource=$result_id\" class=\"card-link\" aria-label=\"resource link\"></a>
+                                </div>
+                                </div>
+                                ";
+                            }
+                        ?>
                     </div>
                 </div>
             </div>

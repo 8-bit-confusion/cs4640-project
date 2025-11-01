@@ -145,6 +145,16 @@ class SessionController {
     }
 
     public function showExplore() {
+        $popular_four_result = pg_query_params(
+            $this->db_connection,
+            "SELECT * FROM project_resource ORDER BY project_resource.download_count DESC LIMIT 4", []);
+        $popular_four = pg_fetch_all($popular_four_result);
+
+        $recent_four_result = pg_query_params(
+            $this->db_connection,
+            "SELECT * FROM project_resource ORDER BY project_resource.id DESC LIMIT 4", []);
+        $recent_four = pg_fetch_all($recent_four_result);
+
         include './views/explore.php';
     }
 
