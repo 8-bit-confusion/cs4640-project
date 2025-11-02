@@ -481,16 +481,17 @@ class SessionController {
 
         if ($this->context["parent_id"] == "null") {
             $ok = pg_query_params(
-                $this->db_connections,
-                "INSERT INTO project_comment (resource_id, author, parent_id body) VALUES ($1, $2, NULL, $3)",
-                [$this->context["resource_id"], $_SESSION["username"], $this->context["body"]]);
+                $this->db_connection,
+                "INSERT INTO project_comment (resource_id, author, parent_id, body) VALUES ($1, $2, NULL, $3)",
+                [$this->context["resource_id"], $_SESSION["username"], $this->context["comment"]]);
         } else {
             $ok = pg_query_params(
-                $this->db_connections,
+                $this->db_connection,
                 "INSERT INTO project_comment (resource_id, author, parent_id, body) VALUES ($1, $2, $3, $4)",
-                [$this->context["resource_id"], $_SESSION["username"], $this->context["parent_id"], $this->context["body"]]);
+                [$this->context["resource_id"], $_SESSION["username"], $this->context["parent_id"], $this->context["comment"]]);
         }
         
+        $this->showResource($this->context["resource_id"]);
     }
 }
 

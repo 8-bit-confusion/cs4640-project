@@ -74,15 +74,17 @@
                     </div>
                 <?php } ?>
             </div>
-            <div class="resource-comments flex-col">
+            <div class="resource-comments flex-col" style="overflow-y: auto;">
                 <span style="font-size: 36px; height: 42px;">Comments</span>
-                <form class="div-input flex-col" style="gap: 10px; align-items: end; padding-bottom: 10px;" method="post">
-                    <input type="hidden" name="command" value="do-comment">
-                    <input type="hidden" name="resource_id" value="<?php echo $resource_data["id"]; ?>">
-                    <input type="hidden" name="parent_id" value="null">
-                    <textarea class="register-input comment-input" rows="4" name="comment" aria-label="Comment entry field" required></textarea>
-                    <button class="styled-button" type="submit">Post comment</button>
-                </form>
+                <?php if (!isset($this->context["replying_to"]) || $this->context["replying_to"] == NULL) { ?>
+                    <form class="div-input flex-col" style="gap: 10px; align-items: end; padding-bottom: 10px;" method="post">
+                        <input type="hidden" name="command" value="do-comment">
+                        <input type="hidden" name="resource_id" value="<?php echo $resource_data["id"]; ?>">
+                        <input type="hidden" name="parent_id" value="null">
+                        <textarea class="register-input comment-input" rows="4" name="comment" aria-label="Comment entry field" required></textarea>
+                        <button class="styled-button" type="submit">Post comment</button>
+                    </form>
+                <?php } ?>
                 <?php foreach ($comments as $comment) { ?>
                     <?php if ($comment["parent_id"] == NULL) { ?>
                         <div class="comment-container flex-col">
@@ -93,12 +95,48 @@
                                     <span style="color: var(--on-secondary-surface);"><?php echo $comment["body"]; ?></span>
                                 </div>
                             </div>
+                            <?php if(isset($this->context["replying_to"]) && $this->context["replying_to"] == $comment["id"]) { ?>
+                                <div style="padding-left: 64px; width: 100%; box-sizing: border-box;">
+                                    <form class="div-input flex-col" style="gap: 10px; align-items: end; padding-bottom: 10px;" method="post">
+                                        <input type="hidden" name="command" value="do-comment">
+                                        <input type="hidden" name="resource_id" value="<?php echo $resource_data["id"]; ?>">
+                                        <input type="hidden" name="parent_id" value="<?php echo $comment["id"] ?>">
+                                        <textarea class="register-input comment-input" rows="4" name="comment" aria-label="Comment entry field" required></textarea>
+                                        <button class="styled-button" type="submit">Post comment</button>
+                                    </form>
+                                </div>
+                            <?php } ?>
                             <div class="flex-row">
-                                <button class="link-button">Reply</button>
+                                <?php if (!isset($this->context["replying_to"]) || $this->context["replying_to"] != $comment["id"]) { ?>
+                                    <form method="get">
+                                        <input type="hidden" name="command" value="show-resource">
+                                        <input type="hidden" name="target_resource" value="<?php echo $resource_data["id"]; ?>">
+                                        <input type="hidden" name="replying_to" value="<?php echo $comment["id"]; ?>">
+                                        <button class="link-button" type="submit">Reply</button>
+                                    </form>
+                                <?php } ?>
                                 <?php if ($comment["author"] == $_SESSION["username"] || $resource_data["author"] == $_SESSION["username"]) { ?>
                                     <button class="link-button">Delete comment</button>
                                 <?php } ?>
                             </div>
+                            <?php foreach ($comments as $child_comment) { ?>
+                                <?php if ($child_comment["parent_id"] == $comment["id"]) { ?>
+                                    <div class="comment-container flex-col" style="width: 100%; box-sizing: border-box;">
+                                        <div class="comment flex-row">
+                                            <img class="comment-pfp" src="styles/pfp.jpg" alt="Commenter profile picture">
+                                            <div class="flex-col">
+                                                <span style="color: var(--on-secondary-surface);"><?php echo $child_comment["author"]; ?></span>
+                                                <span style="color: var(--on-secondary-surface);"><?php echo $child_comment["body"]; ?></span>
+                                            </div>
+                                        </div>
+                                        <div class="flex-row">
+                                            <?php if ($child_comment["author"] == $_SESSION["username"] || $resource_data["author"] == $_SESSION["username"]) { ?>
+                                                <button class="link-button">Delete comment</button>
+                                            <?php } ?>
+                                        </div>
+                                    </div>
+                                <?php } ?>
+                            <?php } ?>
                         </div>
                     <?php } ?>
                 <?php } ?>
