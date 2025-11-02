@@ -45,7 +45,7 @@ Deployed URL: https://cs4640.cs.virginia.edu/gzg8pf/project-static/
                         </div>
                         <div style="display:flex;flex-direction:row-reverse;">
                             <label for="resource-files" class="custom-file-upload">Upload Files</label><br>
-                            <input class="register-input" type="file" name="files[]" id="resource-files" multiple required>
+                            <input class="register-input" type="file" name="files[]" id="resource-files" multiple>
                         </div>
                     </div>
                     <div class="tag-container">
