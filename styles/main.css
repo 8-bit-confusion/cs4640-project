@@ -212,6 +212,13 @@ button:hover {
     }
 }
 
+.comment-input {
+    resize: vertical;
+
+    border-radius: 16px;
+    border-bottom-right-radius: 4px;
+}
+
 .register-input {
     height: fit-content;
     width: -webkit-fill-available;
@@ -245,9 +252,9 @@ button:hover {
 
 
 /* These next two classes overide the default "upload file" input and replace with a fitting button. */
-input[type="file"] {
+/* input[type="file"] {
     display: none;
-}
+} */
 
 .custom-file-upload {
     margin: 1px;
