@@ -45,13 +45,11 @@
                             <?php for ( $i = 0; $i < count($file_data); $i++) { ?>
                             <img style="height:20px;justify-self:left;" src="styles/attach-file-icon.png" alt="File attachment icon">
                             <span style="flex-grow: 1"><?php echo $file_data[$i][0]; ?></span>
-                            <form>
-                                <input type="hidden" name="command" value="do-download">
-                                <input type="hidden" name="file-key" value="<?php echo $file_data[$i][1]; ?>">
-                                <button id="rv-download-button" class="flex-col icon-button" aria-label="Download file" type="button">
+                                <a href="?command=do-download&file_id=<?= urlencode($file_data[$i][1]) ?>"
+                                class="flex-col icon-button"
+                                aria-label="Download <?= htmlspecialchars($file_data[$i][0]) ?>">
                                     <img src="styles/download-icon.svg" alt="Download icon">
-                                </button>
-                            </form>
+                                </a>
                             <?php } ?>
                         </div>
                     <?php } ?>

@@ -67,6 +67,7 @@ class SessionController {
             'do-delete' => $this->doDelete(),
             'do-delete-comment' => $this->doDeleteComment(),
             'do-update-profile' => $this->doUpdateProfile(),
+            'do-download' => $this->doDownload(),
             'do-logout' => session_destroy() && $this->showWelcome(),
         };
     }
@@ -432,9 +433,37 @@ class SessionController {
     }
 
     public function doDownload() {
-        $file_key = $this->context["file-key"];
-        $this->bucket->download($file_key);
+        // prefer file_id -> look up key + name, else fall back to direct params
+        if (isset($this->context['file_id'])) {
+            $res = pg_query_params(
+                $this->db_connection,
+                "SELECT aws_key, name FROM project_file WHERE id = $1",
+                [$this->context['file_id']]
+            );
+            $row = $res ? pg_fetch_assoc($res) : null;
+            if (!$row) {
+                $this->showExplore(); // or show a friendly error page
+                return;
+            }
+            $key  = $row['aws_key'];
+            $name = $row['name'];
+        } else {
+            // fallback to previous behavior if you already emit these params
+            $key  = $this->context['file-key']  ?? '';
+            $name = $this->context['file-name'] ?? 'download';
+            if ($key === '') {
+                $this->showExplore();
+                return;
+            }
+        }
+
+        // presign a short-lived URL (no need to stream bytes through PHP)
+        $url = $this->bucket->presignGetUrl($key, '+5 minutes');
+
+        header('Location: ' . $url);
+        exit;
     }
+
 
     public function doUpdateProfile() {
         if (!isset($_SESSION["username"])) {

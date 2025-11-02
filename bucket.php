@@ -24,14 +24,25 @@ class Bucket{
     }
 
     // Returns the unique key and the AWS path
-    public function upload($source_path) {
-        $file_name = $source_path.uniqid();
+    public function upload($key, $source_path) {
+        // $file_name = $source_path.uniqid();
         $url = $this->client->putObject([
             'Bucket' => $this->bucket,
-            'Key' => $file_name,
+            'Key' => $key,
             'SourceFile' => $source_path,
         ]);
-        return [$file_name, $url];
+        $objectUrl = isset($result['ObjectURL']) ? (string)$result['ObjectURL'] : '';
+        return [$key, $objectUrl];
+    }
+
+    // Create a short-lived URL for browser download (private bucket friendly)
+    public function presignGetUrl($key, $expires = '+5 minutes') {
+        $cmd = $this->client->getCommand('GetObject', [
+            'Bucket' => $this->bucket,
+            'Key'    => $key,
+        ]);
+        $request = $this->client->createPresignedRequest($cmd, $expires);
+        return (string)$request->getUri();
     }
 
     public function download($key, $name) {
