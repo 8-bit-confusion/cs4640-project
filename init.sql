@@ -61,4 +61,4 @@ RETURNS JSON AS $$
 $$ LANGUAGE sql IMMUTABLE;
 
 INSERT INTO project_user(username, display_name, password_hash) VALUES('a', 'a', 'a');
-INSERT INTO project_resource(author, title, body, tags, download_count, files) VALUES('a', 'test title', 'test body', '{"tag_a", "tag_b"}', 0, '{}');
+INSERT INTO project_resource(author, title, body, tags, download_count, files) VALUES('a', 'test title', 'test body', '["tag_a", "tag_b"]'::jsonb, 0, '[]'::jsonb);
