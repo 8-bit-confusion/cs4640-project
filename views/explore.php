@@ -29,6 +29,7 @@
                 <form id="search-bar-form" method="get">
                     <div style="position: relative; width: 100%; height: 100%;">
                         <input name="command" value="do-search" hidden>
+                        <input name="sort" value="downloads" hidden>
                         <input id="search-bar" type="text" name="q" placeholder="Search for learning resources">
                         <div id="search-button-container" class="flex-col">
                         <button class="flex-col" id="search-button" aria-label="Search" form="search-bar-form" type="submit">

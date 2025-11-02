@@ -41,9 +41,9 @@
                     <div class="flex-row">
                         <label for="sort">Sort results by:</label>
                         <select name="sort" id="sort">
-                            <option value="downloads"># of Downloads</option>
-                            <option value="newest">Upload date (newest)</option>
-                            <option value="oldest">Upload date (oldest)</option>
+                            <option value="downloads" <?php if($this->context["sort"] == "downloads") echo "selected" ?>># of Downloads</option>
+                            <option value="newest" <?php if($this->context["sort"] == "newest") echo "selected" ?>>Upload date (newest)</option>
+                            <option value="oldest" <?php if($this->context["sort"] == "oldest") echo "selected" ?>>Upload date (oldest)</option>
                         </select>
                     </div>
                 </form>
@@ -51,7 +51,6 @@
         </div>
         <div id="search-results" class="flex-row" style="flex-grow: 1; flex-wrap: wrap; overflow-y: auto; align-self: center; width: 720px;">
             <?php
-
                 foreach ($search_results as $result) {
                     $result_id = $result["id"];
                     echo "

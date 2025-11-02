@@ -304,9 +304,17 @@ class SessionController {
     public function doSearch() {
         $query = $this->context["q"];
 
+        list($sort_key, $sort_order) = match ($this->context["sort"]) {
+            "downloads" => [" downloads", " DESC"],
+            "newest" => [" id", " DESC"],
+            "oldest" => [" id", ""],
+        };
+
+        $sql_query = "SELECT * FROM project_find_resource_by_tag($1) ORDER BY" . $sort_key . $sort_order;
+
         $search_results_result = pg_query_params(
             $this->db_connection,
-            "SELECT * FROM project_find_resource_by_tag($1)",
+            $sql_query,
             [$query]);
         $search_results = pg_fetch_all($search_results_result);
         include './views/search.php';
