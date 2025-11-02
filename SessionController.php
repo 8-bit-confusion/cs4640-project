@@ -42,7 +42,7 @@ class SessionController {
         // if the command is something else, change it to showing the welcome page.
         if (!isset($_SESSION["username"])) {
             $command = match($command) {
-                'show-welcome', 'show-register', 'do-login', 'do-register' => $command,
+                'show-welcome', 'show-register', 'do-login', 'do-register', 'show-profile', 'do-update-profile' => $command,
                 default => 'show-welcome',
             };
         }
@@ -435,19 +435,23 @@ class SessionController {
     }
 
     public function doUpdateProfile() {
-        $sessionUser = $_SESSION["username"];
-        $formUser = trim($this->context["username"] ?? '');
-        $newDisplay = trim($this->context["display_name"] ?? '');
-
-        // update username if it does not already exist
         if (!isset($_SESSION["username"])) {
-            $this->showProfile("This username already exists. Try a different name.");
-        }
-
-        if ($formUser !== $sessionUser) {
-            $this->showProfile("You can only update your own profile.");
+            $this->showWelcome("You must be logged in to update your profile.");
             return;
         }
+
+        $sessionUser = $_SESSION["username"];
+        $newDisplay = trim($this->context["display_name"] ?? '');
+
+        // // update username if it does not already exist
+        // if (!isset($_SESSION["username"])) {
+        //     $this->showProfile("This username already exists. Try a different name.");
+        // }
+
+        // if ($formUser !== $sessionUser) {
+        //     $this->showProfile("You can only update your own profile.");
+        //     return;
+        // }
 
         if ($newDisplay === '') {
             $this->showProfile("Display name is required.");

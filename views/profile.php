@@ -50,8 +50,8 @@
                             <?= htmlspecialchars($flashMessage) ?>
                         </div>
                     <?php endif; ?>
-                    <form class="flex-col" method="post" action="?command=do-update-profile" style="gap: 16px;">
-                        <input type="hidden" name="username" value="<?= htmlspecialchars($user['username']) ?>">
+                    <form class="flex-col" method="post" action="index.php" style="gap: 16px;">
+                        <input type="hidden" name="command" value="do-update-profile">
                         <div class="div-input">
                             <label for="pf-display">Display name</label><br>
                             <input class="register-input" type="text" id="pf-display" name="display_name" required maxlength="100" value="<?= htmlspecialchars($user['display_name']) ?>" placeholder="Your display name">
@@ -62,12 +62,9 @@
                             <input class="register-input"
                                 type="text"
                                 id="pf-username"
-                                name="username"
-                                required
-                                pattern="[A-Za-z0-9_-]{3,12}"
-                                title="3-12 characters: letters, digits, _, or -"
                                 value="<?= '@' . htmlspecialchars($user['username']) ?>"
-                            >
+                                title="3-12 characters: letters, digits, _, or -"
+                            readonly>
                             <small class="on-secondary-surface" style="opacity:.8;">3-12 characters: letters, digits, _, or -</small>
                         </div>
 
