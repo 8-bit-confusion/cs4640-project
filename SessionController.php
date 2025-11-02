@@ -13,7 +13,7 @@ class SessionController {
         // AWS S3 Bucket setup
         $this->bucket = new Bucket($config);
         
-        $db_config = $config->local_db();
+        $db_config = $config->server_db();
 
         $host = $db_config["host"];
         $user = $db_config["user"];
