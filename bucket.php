@@ -31,7 +31,7 @@ class Bucket{
             'Key' => $key,
             'SourceFile' => $source_path,
         ]);
-        $objectUrl = isset($result['ObjectURL']) ? (string)$result['ObjectURL'] : '';
+        $objectUrl = isset($url['ObjectURL']) ? (string)$url['ObjectURL'] : '';
         return [$key, $objectUrl];
     }
 
