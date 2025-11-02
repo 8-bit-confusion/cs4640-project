@@ -113,6 +113,13 @@ class SessionController {
             $file_name = pg_fetch_all($file_name_results)[0]["name"];
             array_push($file_data, [$file_name, $file_id]);
         }
+
+        $comments_result = pg_query_params(
+            $this->db_connection,
+            "SELECT * FROM project_comment WHERE project_comment.resource_id = $1",
+            [$target_resource]);
+        $comments = pg_fetch_all($comments_result);
+
         include './views/resource.php';
     }
 
@@ -428,6 +435,11 @@ class SessionController {
         $formUser = trim($this->context["username"] ?? '');
         $newDisplay = trim($this->context["display_name"] ?? '');
 
+        // update username if it does not already exist
+        if (!isset($_SESSION["username"])) {
+            $this->showProfile("This username already exists. Try a different name.");
+        }
+
         if ($formUser !== $sessionUser) {
             $this->showProfile("You can only update your own profile.");
             return;
@@ -458,7 +470,24 @@ class SessionController {
 
         $this->showProfile("Profile updated successfully.");
 
-    }   
+    }
+
+    public function doComment() {
+        $ok;
+
+        if ($this->context["parent_id"] == "null") {
+            $ok = pg_query_params(
+                $this->db_connections,
+                "INSERT INTO project_comment (resource_id, author, parent_id body) VALUES ($1, $2, NULL, $3)",
+                [$this->context["resource_id"], $_SESSION["username"], $this->context["body"]]);
+        } else {
+            $ok = pg_query_params(
+                $this->db_connections,
+                "INSERT INTO project_comment (resource_id, author, parent_id, body) VALUES ($1, $2, $3, $4)",
+                [$this->context["resource_id"], $_SESSION["username"], $this->context["parent_id"], $this->context["body"]]);
+        }
+        
+    }
 }
 
 /*

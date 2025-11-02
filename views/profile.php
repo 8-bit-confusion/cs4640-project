@@ -23,6 +23,7 @@
             </a>
             <nav class="flex-row" style="align-items: center; gap: 16px;">
                 <a href="?command=show-profile" aria-label="Open profile">
+                    <!-- STATIC!! GOTTA CHANGE (once we get imgs set up) -->
                     <img class="profile-picture" src="styles/pfp.jpg" alt="Profile picture">
                 </a>
                 <span class="on-resource-card" style="opacity:.8;">
@@ -53,7 +54,7 @@
                         <input type="hidden" name="username" value="<?= htmlspecialchars($user['username']) ?>">
                         <div class="div-input">
                             <label for="pf-display">Display name</label><br>
-                            <input class="register-input" type="text" id="pf-display" name="display_name" required maxlength="80" value="<?= htmlspecialchars($user['display_name']) ?>" placeholder="Your display name">
+                            <input class="register-input" type="text" id="pf-display" name="display_name" required maxlength="100" value="<?= htmlspecialchars($user['display_name']) ?>" placeholder="Your display name">
                         </div>
 
                         <div class="div-input">
@@ -61,8 +62,13 @@
                             <input class="register-input"
                                 type="text"
                                 id="pf-username"
+                                name="username"
+                                required
+                                pattern="[A-Za-z0-9_-]{3,12}"
+                                title="3-12 characters: letters, digits, _, or -"
                                 value="<?= '@' . htmlspecialchars($user['username']) ?>"
-                                readonly>
+                            >
+                            <small class="on-secondary-surface" style="opacity:.8;">3-12 characters: letters, digits, _, or -</small>
                         </div>
 
                         <div class="div-input">

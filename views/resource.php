@@ -78,45 +78,30 @@
                 <span style="font-size: 36px; height: 42px;">Comments</span>
                 <form class="div-input flex-col" style="gap: 10px; align-items: end; padding-bottom: 10px;" method="post">
                     <input type="hidden" name="command" value="do-comment">
+                    <input type="hidden" name="resource_id" value="<?php echo $resource_data["id"]; ?>">
+                    <input type="hidden" name="parent_id" value="null">
                     <textarea class="register-input comment-input" rows="4" name="comment" aria-label="Comment entry field" required></textarea>
                     <button class="styled-button" type="submit">Post comment</button>
                 </form>
-                <div class="comment-container flex-col">
-                    <div class="comment flex-row">
-                        <img class="comment-pfp" src="styles/pfp.jpg" alt="Commenter profile picture">
-                        <span style="color: var(--on-secondary-surface);">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                        </span>
-                    </div>
-                    <div class="flex-row">
-                        <button class="link-button">Reply</button>
-                        <button class="link-button">Delete comment</button>
-                    </div>
-                </div>
-                <div class="comment-container flex-col">
-                    <div class="comment flex-row">
-                        <img class="comment-pfp" src="styles/pfp.jpg" alt="Commenter profile picture">
-                        <span style="color: var(--on-secondary-surface);">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                        </span>
-                    </div>
-                    <div class="flex-row">
-                        <button class="link-button">Reply</button>
-                        <button class="link-button">Delete comment</button>
-                    </div>
-                    <div class="comment-container flex-col">
-                        <div class="comment flex-row">
-                            <img class="comment-pfp" src="styles/pfp.jpg" alt="Commenter profile picture">
-                            <span style="color: var(--on-secondary-surface);">
-                                Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                            </span>
+                <?php foreach ($comments as $comment) { ?>
+                    <?php if ($comment["parent_id"] == NULL) { ?>
+                        <div class="comment-container flex-col">
+                            <div class="comment flex-row">
+                                <img class="comment-pfp" src="styles/pfp.jpg" alt="Commenter profile picture">
+                                <div class="flex-col">
+                                    <span style="color: var(--on-secondary-surface);"><?php echo $comment["author"]; ?></span>
+                                    <span style="color: var(--on-secondary-surface);"><?php echo $comment["body"]; ?></span>
+                                </div>
+                            </div>
+                            <div class="flex-row">
+                                <button class="link-button">Reply</button>
+                                <?php if ($comment["author"] == $_SESSION["username"] || $resource_data["author"] == $_SESSION["username"]) { ?>
+                                    <button class="link-button">Delete comment</button>
+                                <?php } ?>
+                            </div>
                         </div>
-                        <div class="flex-row">
-                            <button class="link-button">Reply</button>
-                            <button class="link-button">Delete comment</button>
-                        </div>
-                    </div>
-                </div>
+                    <?php } ?>
+                <?php } ?>
             </div>
             <div class="spacing"></div>
         </div>

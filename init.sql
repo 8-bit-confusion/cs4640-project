@@ -12,7 +12,7 @@ CREATE TABLE project_user (
 
 CREATE TABLE project_resource (
     id SERIAL PRIMARY KEY,
-    author TEXT NOT NULL REFERENCES project_user(username) ON DELETE CASCADE,
+    author TEXT NOT NULL REFERENCES project_user(username) ON UPDATE CASCADE ON DELETE CASCADE,
     title TEXT NOT NULL, -- 120 char
     body TEXT NOT NULL, -- 500 char
     tags JSONB NOT NULL DEFAULT '[]'::jsonb, -- no spaces, lowercase
@@ -23,7 +23,7 @@ CREATE TABLE project_resource (
 CREATE TABLE project_comment (
     id SERIAL PRIMARY KEY,
     resource_id INT NOT NULL REFERENCES project_resource(id) ON DELETE CASCADE,
-    author TEXT NOT NULL REFERENCES project_user(username) ON DELETE CASCADE,
+    author TEXT NOT NULL REFERENCES project_user(username) ON UPDATE CASCADE ON DELETE CASCADE,
     parent_id INT REFERENCES project_comment(id) ON DELETE CASCADE, -- reply to another parent comment
     body TEXT NOT NULL -- 300 char
 );
@@ -45,20 +45,16 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
-CREATE OR REPLACE FUNCTION project_get_file_ids(resource_id INT)
-RETURNS JSON AS $$
-    RETURN(
-        SELECT to_json(coalesce(array_agg(f.id ORDER BY f.id), ARRAY[]::INT[]))
-        FROM project_file f
-        WHERE f.resource_id = project_get_file_ids.resource_id
-    );
-END;
-$$ LANGUAGE plpgsql;
+-- CREATE OR REPLACE FUNCTION project_get_file_ids(resource_id INT)
+-- RETURNS JSON AS $$
+-- BEGIN
+--     RETURN(
+--         SELECT to_json(coalesce(array_agg(f.id ORDER BY f.id), ARRAY[]::INT[]))
+--         FROM project_file f
+--         WHERE f.resource_id = project_get_file_ids.resource_id
+--     );
+-- END;
+-- $$ LANGUAGE plpgsql;
 
-CREATE OR REPLACE FUNCTION array_to_json(somearray)
-RETURNS JSON AS $$
-    SELECT to_json($1);
-$$ LANGUAGE sql IMMUTABLE;
-
-INSERT INTO project_user(username, display_name, password_hash) VALUES('a', 'a', 'a');
+INSERT INTO project_user(username, email, display_name, password_hash) VALUES('a', 'a@a.com', 'a', 'a');
 INSERT INTO project_resource(author, title, body, tags, download_count, files) VALUES('a', 'test title', 'test body', '["tag_a", "tag_b"]'::jsonb, 0, '[]'::jsonb);
