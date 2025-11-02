@@ -425,8 +425,4 @@ button:hover {
 }
 
 /* $message feedback */
-.feedback {
-  color: #b00020;
-  font-size: 0.95rem;
-  margin-top: 8px;
-}
+.feedback {color: #b00020; font-size: 0.95rem; margin-top: 8px;}
