@@ -35,6 +35,15 @@
             <!-- login -->
             <section class="flex-col" aria-labelledby="welcome-title" style="gap: 16px;">
                 <h2 id="welcome-title" style="margin: 0;">Welcome to OpenLearn</h2>
+                <!-- feedback message -->
+                <span
+                    class="feedback"
+                    role="alert"
+                    aria-live="polite"
+                    style="display:inline-block;"
+                    >
+                    <?php if (isset($message)) echo htmlspecialchars($message, ENT_QUOTES, 'UTF-8'); ?>
+                </span>
                 <p class="on-secondary-surface" style="margin: 0;">
                     Discover and share learning resources with the OpenLearn community.
                 </p>

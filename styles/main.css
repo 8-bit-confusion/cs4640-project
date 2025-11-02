@@ -423,3 +423,10 @@ button:hover {
         flex-direction: column;
     }
 }
+
+/* $message feedback */
+.feedback {
+  color: #b00020;
+  font-size: 0.95rem;
+  margin-top: 8px;
+}
