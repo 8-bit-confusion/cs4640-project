@@ -34,13 +34,14 @@ class Bucket{
         return [$file_name, $url];
     }
 
-    public function download($key) {
+    public function download($key, $name) {
         $file = $this->client->getObject([
             'Bucket' => $this->bucket,
             'Key' => $key,
         ]);
-        $body = $file->get('Body');
-        $body->rewind();
+        header('Content-Type: ' . $file['ContentType']);
+        header('Content-Disposition: attachment; filename="' . $name . '"');
+        echo $file['Body'];
     }
 
     // You can also delete multiple objects with deleteObjects() <- maybe use this by default?
