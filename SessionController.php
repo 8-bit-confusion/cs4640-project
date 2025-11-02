@@ -81,6 +81,10 @@ class SessionController {
     }
 
     public function showRegister($message = "", $prefill = []) { // $prefill can have: ['username', 'email', 'display_name']
+        $defaults = ['username' => '', 'email' => '', 'display_name' => ''];
+        if (!is_array($prefill)) { $prefill = []; }
+        $prefill = array_merge($defaults, $prefill);
+
         include './views/register.php';
     }
 
