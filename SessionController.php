@@ -80,7 +80,7 @@ class SessionController {
         include './views/welcome.php';
     }
 
-    public function showRegister($message = "") {
+    public function showRegister($message = "", $prefill = []) { // $prefill can have: ['username', 'email', 'display_name']
         include './views/register.php';
     }
 
@@ -168,6 +168,40 @@ class SessionController {
         $username = $this->context["username"];
         $password = $this->context["password"];
 
+        // check if password field is empty
+        if ($password === '') {
+            $this->showWelcome("Password is required.");
+            return;
+        }
+
+        // determine whether the input is a username or an email
+        $isEmail = (strpos($username, '@') !== false);
+
+        if ($isEmail) {
+            // if the input contains '@', treat it as an email
+            if (!preg_match('/^[^\s@]+@[^\s@]+\.[^\s@]+$/', $username)) {
+                $this->showWelcome("Please enter a valid email like name@example.com.");
+                return;
+            }
+
+            // check the database to see if this email exists
+            $user_in_db_result = pg_query_params(
+                $this->db_connection,
+                "SELECT username FROM project_user WHERE project_user.email = $1",
+                [$username]);
+            $user_in_db = pg_fetch_all($user_in_db_result);
+
+            // if the email does not exist, display an error and
+            // navigate back to the welcome page
+            if (count($user_in_db) == 0) {
+                $this->showWelcome("Email not found. Did you mean to register an account?");
+                return;
+            }
+
+            // extract the corresponding username for session storage
+            $username = $user_in_db[0]["username"];
+        }
+
         // check the database to see if this username exists
         $user_in_db_result = pg_query_params(
             $this->db_connection,
@@ -214,44 +248,75 @@ class SessionController {
 
     public function doRegister() {
         $username = $this->context["username"];
+        $email = $this->context["email"];
         $display_name = $this->context["display_name"];
-        $password = $this->context["pwd"];
-        $confirm_password = $this->context["retype_pwd"];
+        $password = (string)($this->context["pwd"]);
+        $confirm_password = (string)($this->context["retype_pwd"]);
 
-        // if the inputted passwords don't match each other, display
-        // an error and navigate back to the register page
-        if ($password != $confirm_password) {
-            $this->showRegister("Passwords do not match.");
+        $prefill = [
+            'username' => $username,
+            'email' => $email,
+            'display_name' => $display_name
+        ];
+
+        // validate inputs
+        if (!preg_match('/^[A-Za-z0-9_-]{3,12}$/', $username)) {
+            $this->showRegister("Username must be 3–12 characters using letters, digits, _ or -.", $prefill);
+            return;
+        }
+        if (!preg_match('/^[^\s@]+@[^\s@]+\.[^\s@]+$/', $email)) {
+            $this->showRegister("Please enter a valid email like name@example.com.", $prefill);
+            return;
+        }
+        if ($password === '' || $confirm_password === '') {
+            $this->showRegister("Password and confirmation are required.", $prefill);
+            return;
+        }
+        if ($password !== $confirm_password) {
+            $this->showRegister("Passwords do not match.", $prefill);
             return;
         }
 
-        // check the database to see if the username is taken
-        $user_in_db_result = pg_query_params(
+        // check the database to see if the username or email is taken
+        $existsUser = pg_query_params(
             $this->db_connection,
-            "SELECT username FROM project_user WHERE project_user.username = $1",
-            [$username]);
-        $user_in_db = pg_fetch_all($user_in_db_result);
+            "SELECT 1 FROM project_user WHERE username = $1",
+            [$username]
+        );
+        if (pg_fetch_assoc($existsUser)) {
+            $this->showRegister("Username is already in use. Did you mean to log in?", $prefill);
+            return;
+        }
 
-        // if the username is already in use, display an error and
-        // navigate back to the register page
-        if (count($user_in_db) > 0) {
-            $this->showRegister("Username is already in use. Did you mean to login?");
+        $existsEmail = pg_query_params(
+            $this->db_connection,
+            "SELECT 1 FROM project_user WHERE email = $1",
+            [$email]
+        );
+        if (pg_fetch_assoc($existsEmail)) {
+            $this->showRegister("Email is already in use. Try logging in instead.", $prefill);
             return;
         }
 
         // if registration is successful, hash the user's password
-        // and add their username, display name, and hashed password
-        // to the database
+        // and add their username, display name, email, and hashed password
         $password_hash = password_hash($password, PASSWORD_BCRYPT);
-        pg_query_params(
+
+        $ok = pg_query_params(
             $this->db_connection,
-            "INSERT INTO project_user (username, display_name, password_hash) VALUES ($1, $2, $3)",
-            [$username, $display_name, $password_hash]);
+            "INSERT INTO project_user (username, email, display_name, password_hash)
+            VALUES ($1, $2, $3, $4)",
+            [$username, $email, $display_name, $password_hash]
+        );
+
+        if ($ok === false) {
+            $this->showRegister("Failed to create account. Please try again.", $prefill);
+            return;
+        }
 
         $_SESSION["username"] = $username;
         $_SESSION["display_name"] = $display_name;
 
-        // default to the explore page after registering
         $this->showExplore();
     }
 

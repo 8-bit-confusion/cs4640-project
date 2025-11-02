@@ -22,15 +22,27 @@
         <div class="flex-row register" style="flex-grow: 1;">
             <div class="create-account">
                 <h1> Create an OpenLearn Account </h1>
+                <!-- feedback message span -->
+                <span class="feedback" role="alert" aria-live="polite" style="display:inline-block;">
+                    <?php if (isset($message)) echo htmlspecialchars($message, ENT_QUOTES, 'UTF-8'); ?>
+                </span>
+
                 <form class="flex-col register-form" method="post">
                     <input type="hidden" name="command" value="do-register">
                     <div class="div-input">
                         <label for="username">Username</label><br>
-                        <input class="register-input" type="text" id="username" name="username" required>
+                        <input class="register-input" type="text" id="username" name="username" required
+                            value="<?php echo htmlspecialchars($prefill['username']); ?>">
+                    </div>
+                    <div class="div-input">
+                        <label for="email">Email</label><br>
+                        <input class="register-input" type="email" id="email" name="email" required
+                            value="<?php echo htmlspecialchars($prefill['email']); ?>">
                     </div>
                     <div class="div-input">
                         <label for="display_name">Display name</label><br>
-                        <input class="register-input" type="text" id="display_name" name="display_name" required>
+                        <input class="register-input" type="text" id="display_name" name="display_name" required
+                            value="<?php echo htmlspecialchars($prefill['display_name']); ?>">
                     </div>
                     <div class="div-input">
                         <label for="pwd">Password</label><br>

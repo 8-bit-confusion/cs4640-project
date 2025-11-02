@@ -4,7 +4,8 @@ DROP TABLE IF EXISTS project_comment CASCADE;
 DROP TABLE IF EXISTS project_file CASCADE;
 
 CREATE TABLE project_user (
-    username TEXT PRIMARY KEY,
+    username TEXT UNIQUE PRIMARY KEY,
+    email TEXT UNIQUE NOT NULL,
     display_name TEXT NOT NULL,
     password_hash TEXT NOT NULL
 );
