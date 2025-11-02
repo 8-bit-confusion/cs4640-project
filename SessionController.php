@@ -526,7 +526,8 @@ class SessionController {
     }
 
     public function doDeleteComment() {
-        if ($_SESSION["username"] != $this->context["comment_author"]) {
+        if ($_SESSION["username"] != $this->context["comment_author"] && $_SESSION["username"] != $this->context["resource_author"]) {
+            $this->showResource($this->context["target_resource"]);
             return; // don't delete anything if we aren't the owner.
         }
 

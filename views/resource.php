@@ -119,6 +119,7 @@
                                         <input type="hidden" name="target_comment" value="<?php echo $comment["id"]; ?>">
                                         <input type="hidden" name="comment_author" value="<?php echo $comment["author"]; ?>">
                                         <input type="hidden" name="target_resource" value="<?php echo $resource_data["id"]; ?>">
+                                        <input type="hidden" name="resource_author" value="<?php echo $resource_data["author"]; ?>">
                                         <button class="link-button">Delete comment</button>
                                     </form>
                                 <?php } ?>
@@ -140,6 +141,7 @@
                                                     <input type="hidden" name="target_comment" value="<?php echo $child_comment["id"]; ?>">
                                                     <input type="hidden" name="comment_author" value="<?php echo $child_comment["author"]; ?>">
                                                     <input type="hidden" name="target_resource" value="<?php echo $resource_data["id"]; ?>">
+                                                    <input type="hidden" name="resource_author" value="<?php echo $resource_data["author"]; ?>">
                                                     <button class="link-button">Delete comment</button>
                                                 </form>
                                             <?php } ?>
