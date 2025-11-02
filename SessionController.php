@@ -370,7 +370,7 @@ class SessionController {
         $query = $this->context["q"];
 
         list($sort_key, $sort_order) = match ($this->context["sort"]) {
-            "downloads" => [" downloads", " DESC"],
+            "downloads" => [" download_count", " DESC"],
             "newest" => [" id", " DESC"],
             "oldest" => [" id", ""],
         };
