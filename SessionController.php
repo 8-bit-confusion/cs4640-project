@@ -130,14 +130,15 @@ class SessionController {
     public function showProfile($message = "") {
         $res = pg_query_params(
             $this->db_connection,
-            "SELECT username, display_name
+            "SELECT username, display_name, bio
             FROM project_user
             WHERE username = $1",
             [$_SESSION['username']]
         );
         $user = pg_fetch_assoc($res) ?: [
-            'username'     => $_SESSION['username'],
-            'display_name' => $_SESSION['display_name'] ?? ''
+            'username' => $_SESSION['username'],
+            'display_name' => $_SESSION['display_name'] ?? '',
+            'bio' => ''
         ];
 
         $resources_result = pg_query_params(
@@ -442,16 +443,7 @@ class SessionController {
 
         $sessionUser = $_SESSION["username"];
         $newDisplay = trim($this->context["display_name"] ?? '');
-
-        // // update username if it does not already exist
-        // if (!isset($_SESSION["username"])) {
-        //     $this->showProfile("This username already exists. Try a different name.");
-        // }
-
-        // if ($formUser !== $sessionUser) {
-        //     $this->showProfile("You can only update your own profile.");
-        //     return;
-        // }
+        $newBio = $this->context["bio"];
 
         if ($newDisplay === '') {
             $this->showProfile("Display name is required.");
@@ -463,10 +455,15 @@ class SessionController {
             return;
         }
 
+        if (mb_strlen($newBio) > 200) {
+            $this->showProfile("Bio is too long (maximum 200 characters).");
+            return;
+        }
+
         $ok = pg_query_params(
             $this->db_connection,
-            "UPDATE project_user SET display_name = $1 WHERE username = $2",
-            [$newDisplay, $sessionUser]
+            "UPDATE project_user SET display_name = $1, bio = $2 WHERE username = $3",
+            [$newDisplay, $newBio, $sessionUser]
         );
         
         if ($ok === false) {

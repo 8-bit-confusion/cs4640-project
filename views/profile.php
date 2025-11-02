@@ -50,6 +50,7 @@
                             <?= htmlspecialchars($flashMessage) ?>
                         </div>
                     <?php endif; ?>
+                    <?php $bioMax = 200; ?>
                     <form class="flex-col" method="post" action="index.php" style="gap: 16px;">
                         <input type="hidden" name="command" value="do-update-profile">
                         <div class="div-input">
@@ -63,16 +64,20 @@
                                 type="text"
                                 id="pf-username"
                                 value="<?= '@' . htmlspecialchars($user['username']) ?>"
-                                title="3-12 characters: letters, digits, _, or -"
                             readonly>
-                            <small class="on-secondary-surface" style="opacity:.8;">3-12 characters: letters, digits, _, or -</small>
                         </div>
 
                         <div class="div-input">
-                            <label for="pf-bio">Description</label><br>
-                            <textarea class="register-input" id="pf-bio" name="bio" rows="4" placeholder="Tell others about your interests…"></textarea>
+                        <label for="pf-bio">Description</label><br>
+                        <textarea class="register-input"
+                                    id="pf-bio"
+                                    name="bio"
+                                    rows="4"
+                                    maxlength="<?= htmlspecialchars($bioMax) ?>"
+                                    placeholder="Tell others about your interests…"><?=
+                            htmlspecialchars($user['bio'])
+                        ?></textarea>
                         </div>
-
                         <button class="styled-button" type="submit" aria-label="Save profile changes">Save</button>
                     </form>
                 </div>
