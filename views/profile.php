@@ -46,10 +46,11 @@
                         style="width: 96px; height: 96px; border-radius: 9999px; object-fit: cover;">
 
                     <?php if (!empty($flashMessage)): ?>
-                        <div class="flash" style="color:#155724;background:#d4edda;border:1px solid #c3e6cb;padding:8px;border-radius:6px;">
-                            <?= htmlspecialchars($flashMessage) ?>
-                        </div>
+                    <div class="flash" style="color:#155724;background:#d4edda;border:1px solid #c3e6cb;padding:8px;border-radius:6px;">
+                        <?= htmlspecialchars($flashMessage) ?>
+                    </div>
                     <?php endif; ?>
+                    
                     <?php $bioMax = 200; ?>
                     <form class="flex-col" method="post" action="index.php" style="gap: 16px;">
                         <input type="hidden" name="command" value="do-update-profile">
