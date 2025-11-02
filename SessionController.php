@@ -65,6 +65,7 @@ class SessionController {
             'do-create' => $this->doCreate(),
             'do-comment' => $this->doComment(),
             'do-delete' => $this->doDelete(),
+            'do-delete-comment' => $this->doDeleteComment(),
             'do-update-profile' => $this->doUpdateProfile(),
             'do-logout' => session_destroy() && $this->showWelcome(),
         };
@@ -493,6 +494,24 @@ class SessionController {
         }
         
         $this->showResource($this->context["resource_id"]);
+    }
+
+    public function doDeleteComment() {
+        if ($_SESSION["username"] != $this->context["comment_author"]) {
+            return; // don't delete anything if we aren't the owner.
+        }
+
+        pg_query_params(
+            $this->db_connection,
+            "DELETE FROM project_comment WHERE id = ($1)",
+            [$this->context["target_comment"]]);
+        
+        pg_query_params(
+            $this->db_connection,
+            "DELETE FROM project_comment WHERE parent_id = ($1)",
+            [$this->context["target_comment"]]);
+
+        $this->showResource($this->context["target_resource"]);
     }
 }
 
