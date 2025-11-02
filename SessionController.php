@@ -321,6 +321,10 @@ class SessionController {
     }
 
     public function doDelete() {
+        if ($_SESSION["username"] != $this->context["resource_author"]) {
+            return; // don't delete anything if we aren't the owner.
+        }
+
         $resource = $this->context['target_resource'];
         $file_ids_result = pg_query_params(
             $this->db_connection,

@@ -24,20 +24,13 @@
                 </a>
             </nav>
         </header>
-        <div>
-            <form>
-                <input type="hidden" name="target_resource" value="<?php echo $target_resource ?>">
-                <input type="hidden" name="command" value="do-delete">
-                <button style="background-color:red;" type="submit">Delete Resource</button>
-            </form>
-        </div>
         <div class="flex-row resource-view-container">
             <div class="spacing"></div>
             <div class="resource-view flex-col">
                 <div class="title-bar-container flex-row">
-                    <span style="font-size: 48px;"><?php echo $resource_data["title"] ?></span>
+                    <span style="font-size: 48px;"><?php echo $resource_data["title"]; ?></span>
                     <div class="flex-row" style="gap: 10px;">
-                        <span style="font-size: 24px;">###</span>
+                        <span style="font-size: 24px;"><?php echo $resource_data["download_count"]; ?></span>
                         <!-- Download entire resource not yet implemented -->
                         <img class="download-icon-large" src="styles/download-icon.svg" alt="downloads">
                     </div>
@@ -47,19 +40,21 @@
                 </span>
                 <img class="preview" src="styles/img-preview.jpg" alt="Image preview">
                 <div class="outline-section flex-col">
-                    <div class="styled-file">
-                        <?php for ( $i = 0; $i < count($file_data); $i++) { ?>
-                        <img style="height:20px;justify-self:left;" src="styles/attach-file-icon.png" alt="File attachment icon">
-                        <span style="flex-grow: 1"><?php echo $file_data[$i][0]; ?></span>
-                        <form>
-                            <input type="hidden" name="command" value="do-download">
-                            <input type="hidden" name="file-key" value="<?php echo $$file_data[$i][1]; ?>">
-                            <button id="rv-download-button" class="flex-col icon-button" aria-label="Download file" type="button">
-                                <img src="styles/download-icon.svg" alt="Download icon">
-                            </button>
-                        </form>
-                        <?php } ?>
-                    </div>
+                    <?php if (count($file_data) == 0) { echo "No attached files."; } else { ?>
+                        <div class="styled-file">
+                            <?php for ( $i = 0; $i < count($file_data); $i++) { ?>
+                            <img style="height:20px;justify-self:left;" src="styles/attach-file-icon.png" alt="File attachment icon">
+                            <span style="flex-grow: 1"><?php echo $file_data[$i][0]; ?></span>
+                            <form>
+                                <input type="hidden" name="command" value="do-download">
+                                <input type="hidden" name="file-key" value="<?php echo $file_data[$i][1]; ?>">
+                                <button id="rv-download-button" class="flex-col icon-button" aria-label="Download file" type="button">
+                                    <img src="styles/download-icon.svg" alt="Download icon">
+                                </button>
+                            </form>
+                            <?php } ?>
+                        </div>
+                    <?php } ?>
                 </div>
                 <div class="flex-row tags">
                 <?php foreach ($tags as $tag) { ?>
@@ -68,6 +63,16 @@
                     </div>
                 <?php } ?>
                 </div>
+                <?php if ($_SESSION["username"] == $resource_data["author"]) { ?>
+                    <div style="align-self: end;">
+                        <form>
+                            <input type="hidden" name="target_resource" value="<?php echo $target_resource; ?>">
+                            <input type="hidden" name="resource_author" value="<?php echo $resource_data["author"]; ?>">
+                            <input type="hidden" name="command" value="do-delete">
+                            <button class="styled-button" style="background-color: #b3261e;" type="submit">Delete Resource</button>
+                        </form>
+                    </div>
+                <?php } ?>
             </div>
             <div class="resource-comments flex-col">
                 <span style="font-size: 36px; height: 42px;">Comments</span>
