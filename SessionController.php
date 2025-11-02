@@ -346,6 +346,11 @@ class SessionController {
         for ($i = 0; $i < count($file_names); $i++) {
             $file_name = $file_names[$i];
             $tmp_name = $tmp_names[$i];
+
+            if ($file_name == NULL or $tmp_name == NULL) {
+                continue;
+            }
+
             $upload_dir = 'uploads/';
             $destination = $upload_dir . basename($file_name);   
 
@@ -414,15 +419,16 @@ class SessionController {
         // $file_ids = explode(',', substr($file_ids, 1, strlen($file_ids) - 2));
         // if (count($file_ids) == 1 && $file_ids[0] == '') $file_ids = [];
         $row = pg_fetch_assoc($file_ids_result);
-        $file_ids=json_decode($row['file_ids'], true);
+        $file_ids = json_decode($row['files'], true);
         if ($file_ids === null) $file_ids = [];
 
         foreach ($file_ids as $file_id) {
-            $file_key = pg_query_params(
+            $file_key_result = pg_query_params(
                 $this->db_connection,
-                "SELECT s3_key FROM project_file WHERE id = ($1)",
+                "SELECT aws_key FROM project_file WHERE id = ($1)",
                 [$file_id]);
-            this->bucket->delete($file_key);
+            $file_key = pg_fetch_all($file_key_result)[0]["aws_key"];
+            $this->bucket->delete($file_key);
         }
         pg_query_params(
             $this->db_connection,
