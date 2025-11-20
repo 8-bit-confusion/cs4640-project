@@ -26,7 +26,7 @@ Deployed URL: https://cs4640.cs.virginia.edu/gzg8pf/project-static/
         </header>
         <div class="flex-row center" style="flex-grow: 1;">
             <div class="flex-col" style="max-height:75%;min-width: min-content;min-height: min-content;max-width: 55%;width: -webkit-fill-available;">
-                <form class="flex-col center" enctype="multipart/form-data" method="post">
+                <form id="register-form" class="flex-col center" enctype="multipart/form-data" onsubmit="return validateItem()" method="post">
                     <input type="hidden" name="command" value="do-create">
                     <div class="div-input">
                         <label for="resource-title">Title</label><br>
