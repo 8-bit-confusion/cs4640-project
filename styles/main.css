@@ -60,6 +60,41 @@ button:hover {
     border-radius: 32px;
 }
 
+#explore-pfp-menu {
+    position: absolute;
+    background-color: var(--secondary-surface);
+    padding: 8px;
+    border-radius: 8px;
+    width: max-content;
+
+    right: 0px;
+    top: 64px;
+
+    & #menu-hitbox {
+        position: absolute;
+        width: calc(100% + 16px);
+        height: 48px;
+        bottom: 0px;
+        right: -8px;
+    }
+
+    & > .flex-row {
+        justify-content: end;
+        align-items: end;
+        padding-right: 8px;
+        height: 0px;
+        overflow: visible;
+    }
+
+    & #pointer {
+        width: 16px;
+        height: 16px;
+        background-color: var(--secondary-surface);
+        transform: rotate(45deg);
+        border-radius: 2px;
+    }
+}
+
 #search-bar-container {
     justify-content: center;
     align-items: center;
