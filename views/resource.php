@@ -14,6 +14,8 @@
         <meta name="author" content="Lily Wasko">
         <link rel="stylesheet" href="styles/main.css">
         <link rel="stylesheet" href="styles/resource.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script src="./resource.js"></script>
     </head>
     <body class="page-fill-body flex-col" style="padding-bottom: 0px;">
         <header id="main-header" class="flex-row" style="justify-content: space-between; align-items: center;">
@@ -74,45 +76,39 @@
             </div>
             <div class="resource-comments flex-col" style="overflow-y: auto;">
                 <span style="font-size: 36px; height: 42px;">Comments</span>
-                <?php if (!isset($this->context["replying_to"]) || $this->context["replying_to"] == NULL) { ?>
-                    <form class="div-input flex-col" style="gap: 10px; align-items: end; padding-bottom: 10px;" method="post">
-                        <input type="hidden" name="command" value="do-comment">
-                        <input type="hidden" name="resource_id" value="<?php echo $resource_data["id"]; ?>">
-                        <input type="hidden" name="parent_id" value="null">
-                        <textarea class="register-input comment-input" rows="4" name="comment" aria-label="Comment entry field" required></textarea>
-                        <button class="styled-button" type="submit">Post comment</button>
-                    </form>
-                <?php } ?>
+                <form class="div-input flex-col" style="gap: 10px; align-items: end; padding-bottom: 10px;" method="post">
+                    <input type="hidden" name="command" value="do-comment">
+                    <input type="hidden" name="resource_id" value="<?php echo $resource_data["id"]; ?>">
+                    <input type="hidden" name="parent_id" value="null">
+                    <textarea class="register-input comment-input" rows="4" name="comment" aria-label="Comment entry field" required></textarea>
+                    <button class="styled-button" type="submit">Post comment</button>
+                </form>
                 <?php foreach ($comments as $comment) { ?>
                     <?php if ($comment["parent_id"] == NULL) { ?>
                         <div class="comment-container flex-col">
-                            <div class="comment flex-row">
+                            <div class="comment flex-row" data-comment-id="<?php echo $comment["id"]; ?>">
                                 <img class="comment-pfp" src="styles/pfp.jpg" alt="Commenter profile picture">
                                 <div class="flex-col">
                                     <span style="color: var(--on-secondary-surface);"><?php echo $comment["author"]; ?></span>
                                     <span style="color: var(--on-secondary-surface);"><?php echo $comment["body"]; ?></span>
                                 </div>
                             </div>
-                            <?php if(isset($this->context["replying_to"]) && $this->context["replying_to"] == $comment["id"]) { ?>
-                                <div style="padding-left: 64px; width: 100%; box-sizing: border-box;">
-                                    <form class="div-input flex-col" style="gap: 10px; align-items: end; padding-bottom: 10px;" method="post">
-                                        <input type="hidden" name="command" value="do-comment">
-                                        <input type="hidden" name="resource_id" value="<?php echo $resource_data["id"]; ?>">
-                                        <input type="hidden" name="parent_id" value="<?php echo $comment["id"] ?>">
-                                        <textarea class="register-input comment-input" rows="4" name="comment" aria-label="Comment entry field" required></textarea>
+                            <div class="comment-reply" style="padding-left: 64px; width: 100%; box-sizing: border-box; display: none;">
+                                <form class="div-input flex-col" style="gap: 10px; align-items: end; padding-bottom: 10px;" method="post">
+                                    <input type="hidden" name="command" value="do-comment">
+                                    <input type="hidden" name="resource_id" value="<?php echo $resource_data["id"]; ?>">
+                                    <input type="hidden" name="parent_id" value="<?php echo $comment["id"]; ?>">
+                                    <textarea class="register-input comment-input" rows="4" name="comment" aria-label="Comment entry field" required></textarea>
+                                    <div class="flex-row" style="gap: 8px;">
                                         <button class="styled-button" type="submit">Post comment</button>
-                                    </form>
-                                </div>
-                            <?php } ?>
+                                        <button class="styled-button" type="button" style="background-color: grey"
+                                                onclick="cancelComment(<?php echo $comment['id']; ?>);">Cancel</button>
+                                    </div>
+                                </form>
+                            </div>
                             <div class="flex-row">
-                                <?php if (!isset($this->context["replying_to"]) || $this->context["replying_to"] != $comment["id"]) { ?>
-                                    <form method="get">
-                                        <input type="hidden" name="command" value="show-resource">
-                                        <input type="hidden" name="target_resource" value="<?php echo $resource_data["id"]; ?>">
-                                        <input type="hidden" name="replying_to" value="<?php echo $comment["id"]; ?>">
-                                        <button class="link-button" type="submit">Reply</button>
-                                    </form>
-                                <?php } ?>
+                                <button class="link-button" type="button" style="display: block;"
+                                        onclick="replyComment(<?php echo $comment['id']; ?>);">Reply</button>
                                 <?php if ($comment["author"] == $_SESSION["username"] || $resource_data["author"] == $_SESSION["username"]) { ?>
                                     <form method="post">
                                         <input type="hidden" name="command" value="do-delete-comment">
