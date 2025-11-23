@@ -32,10 +32,10 @@
                         <input name="sort" value="downloads" hidden>
                         <input id="search-bar" type="text" name="q" placeholder="Search for learning resources">
                         <div id="search-button-container" class="flex-col">
-                        <button class="flex-col" id="search-button" aria-label="Search" form="search-bar-form" type="submit">
-                            <img id="search-button-icon" src="./styles/search-icon.svg" alt="Search icon">
-                        </button>
-                    </div>
+                            <button class="flex-col" id="search-button" aria-label="Search" form="search-bar-form" type="submit">
+                                <img id="search-button-icon" src="./styles/search-icon.svg" alt="Search icon">
+                            </button>
+                        </div>
                     </div>
                 </form>
             </div>

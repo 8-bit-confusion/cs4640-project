@@ -65,7 +65,7 @@ button:hover {
     align-items: center;
     width: 100%;
     flex-grow: 1;
-    padding: 64px 0px;
+    padding: 48px 0px;
 }
 
 #search-bar-form {
