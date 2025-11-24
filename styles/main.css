@@ -68,7 +68,7 @@ button:hover {
     width: max-content;
 
     right: 0px;
-    top: 64px;
+    top: 48px;
 
     & #menu-hitbox {
         position: absolute;

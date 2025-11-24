@@ -21,9 +21,6 @@
             <h1 style="font-weight: normal;">OpenLearn</h1>
             <nav>
                 <div id="explore-pfp-anchor" style="position: relative;">
-                    <a href="./?command=show-profile" aria-label="Open profile">
-                        <img class="profile-picture" src="./styles/pfp.jpg" alt="Profile picture">
-                    </a>
                     <div id="explore-pfp-menu" style="visibility: hidden;">
                         <div style="position: relative;"><div id="menu-hitbox"></div></div>
                         <div class="flex-row"><div id="pointer"></div></div>
@@ -31,6 +28,9 @@
                             Log out
                         </a>
                     </div>
+                    <a href="./?command=show-profile" aria-label="Open profile" style="position: absolute; left: -48px; top: -24px;">
+                        <img class="profile-picture" src="./styles/pfp.jpg" alt="Profile picture">
+                    </a>
                 </div>
             </nav>
         </header>
