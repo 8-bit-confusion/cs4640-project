@@ -1,7 +1,7 @@
 <?php 
 // Created this so my messy code doesn't get in the way of other
 // development! Feel free to integrate later. 
-require 'vendor/autoload.php';
+require __DIR__ . '/vendor/autoload.php';
 
 use Aws\S3\S3Client;
 use Aws\Exception\AwsException;

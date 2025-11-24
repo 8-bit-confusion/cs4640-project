@@ -8,7 +8,7 @@ class SessionController {
     public function __construct() {
         session_start();
         // change to ::$server_db when deploying
-        $config = new Config("./.env");
+        $config = new Config(__DIR__ . '/.env');
 
         // AWS S3 Bucket setup
         $this->bucket = new Bucket($config);
