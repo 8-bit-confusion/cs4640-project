@@ -40,9 +40,10 @@ class SessionController {
         // if the user isn't signed in yet, we should only allow commands for viewing
         // the welcome and register pages and for the logging in and registering actions.
         // if the command is something else, change it to showing the welcome page.
+
         if (!isset($_SESSION["username"])) {
             $command = match($command) {
-                'show-welcome', 'show-register', 'do-login', 'do-register', 'show-profile', 'do-update-profile' => $command,
+                'show-welcome', 'show-register', 'do-login', 'do-register', 'show-profile', 'do-update-profile', 'get-author' => $command,
                 default => 'show-welcome',
             };
         }
@@ -69,6 +70,9 @@ class SessionController {
             'do-update-profile' => $this->doUpdateProfile(),
             'do-download' => $this->doDownload(),
             'do-logout' => session_destroy() && $this->showWelcome(),
+
+            // json commands
+            'get-author' => $this->getAuthor(),
         };
     }
 
@@ -557,14 +561,14 @@ class SessionController {
         header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
         header("Content-Type: application/json");
 
-        resource = $this->context["resource-id"];
+        $resource = $this->context["resource-id"];
         $author_result = pg_query_params(
             $this->db_connection,
             "SELECT author FROM project_resource WHERE id = ($1)",
             [$resource]);
         $author = pg_fetch_all($author_result)[0]["author"];
 
-        echo json_encode(["author" => $author]);
+        echo json_encode(["author" => $author], JSON_PRETTY_PRINT);
     }
 }
 
