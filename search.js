@@ -15,7 +15,7 @@ async function showAuthor(id) {
 
     var result = await response.json();
     var author = result.author;
-    $( "[data-show-author-id=\"" + id + "\"]" ).html(author);
+    $( "[data-show-author-id=\"" + id + "\"]" ).html("author: " + author);
 }
 
 function hideAuthor(id) {
