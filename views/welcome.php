@@ -14,6 +14,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="styles/main.css">
         <link rel="icon" type="image/png" href="styles/OpenLearnIcon.png">
+        <script src="welcome.js" defer></script>
     </head>
 
     <body class="page-fill-body flex-col">
@@ -48,7 +49,7 @@
                     Discover and share learning resources with the OpenLearn community.
                 </p>
 
-                <form class="flex-col" method="post" style="gap: 16px; margin-top: 8px;">
+                <form id="welcome-login-form" class="flex-col" method="post" style="gap: 16px; margin-top: 8px;">
                     <input type="hidden" name="command" value="do-login">
                     <div class="div-input">
                         <label for="wl-username">Username or email</label><br>

@@ -14,14 +14,24 @@
         <meta name="author" content="Lily Wasko">
         <!-- site hosted at https://cs4640.cs.virginia.edu/gzg8pf/project-static/ -->
         <link rel="stylesheet" href="styles/main.css">
+        <script src="./explore.js"></script>
     </head>
     <body class="page-fill-body flex-col">
         <header id="main-header" class="flex-row" style="justify-content: space-between; align-items: center;">
             <a class="nav-main" href="./?command=show-explore"><h1 style="font-weight: normal;">OpenLearn</h1></a>
             <nav>
-                <a href="./?command=show-profile" aria-label="Open profile">
-                    <img class="profile-picture" src="styles/pfp.jpg" alt="Profile picture">
-                </a>
+                <div id="explore-pfp-anchor" style="position: relative;">
+                    <div id="explore-pfp-menu" style="visibility: hidden;">
+                        <div style="position: relative;"><div id="menu-hitbox"></div></div>
+                        <div class="flex-row"><div id="pointer"></div></div>
+                        <a href="?command=do-logout" aria-label="Log out of OpenLearn" style="padding: 8px 16px; font-size: 0.9rem;">
+                            Log out
+                        </a>
+                    </div>
+                    <a href="./?command=show-profile" aria-label="Open profile" style="position: absolute; left: -48px; top: -24px;">
+                        <img class="profile-picture" src="./styles/pfp.jpg" alt="Profile picture">
+                    </a>
+                </div>
             </nav>
         </header>
         <div class="flex-col" style="align-items: center; justify-content: start;">
