@@ -1,8 +1,8 @@
 <!--
-    OpenLearn — Sprint 2 (Static)
+    OpenLearn — Sprint 4
     Authors: Natalie Nguyen, Lilli Hrncir, Lily Wasko
     Course: CS 4640 (Fall 2025)
-    Deployed URL: https://cs4640.cs.virginia.edu/gzg8pf/project-static/
+    Deployed URL: https://cs4640.cs.virginia.edu/gzg8pf/project-js
 -->
 
 <!DOCTYPE html>
