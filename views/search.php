@@ -14,7 +14,9 @@
         <meta name="author" content="Lily Wasko">
         <!-- site hosted at https://cs4640.cs.virginia.edu/gzg8pf/project-static/ -->
         <link rel="stylesheet" href="styles/main.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
         <script src="./explore.js"></script>
+        <script src="./search.js"></script>
     </head>
     <body class="page-fill-body flex-col">
         <header id="main-header" class="flex-row" style="justify-content: space-between; align-items: center;">
@@ -65,13 +67,14 @@
                     $result_id = $result["id"];
                     echo "
                     <div>
-                    <div class=\"resource-card flex-col\">
+                    <div class=\"resource-card flex-col\" onmouseenter=\"showAuthor($result_id);\" onmouseleave=\"hideAuthor($result_id);\">
                         <img class=\"resource-preview\" src=\"./styles/img-preview.jpg\" alt=\"resource preview\">
                         <div class=\"card-title-row flex-row\">
                             <span class=\"on-resource-card\" style=\"flex-grow: 1;\">{$result["title"]}</span>
                             <span class=\"on-resource-card resource-downloads\">{$result["download_count"]}</span>
                             <img class=\"download-icon\" src=\"./styles/download-icon.svg\" alt=\"downloads\">
                         </div>
+                        <span data-show-author-id=\"$result_id\"></span>
                         <a href=\"?command=show-resource&target_resource=$result_id\" class=\"card-link\" aria-label=\"resource link\"></a>
                     </div>
                     </div>
