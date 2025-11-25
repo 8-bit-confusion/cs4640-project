@@ -61,5 +61,6 @@
                 <img src="styles/OpenLearnLogo.png" alt="Open Learn Logo" width="400" height="400" style="vertical-align:middle; text-align:center;">
             </div>
         </div>
+        <script src="register.js"></script>
     </body>
 </html>
