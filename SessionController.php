@@ -549,6 +549,23 @@ class SessionController {
 
         $this->showResource($this->context["target_resource"]);
     }
+
+    public function getAuthor() {
+        header("Access-Control-Allow-Origin: *");
+        header("Access-Control-Allow-Headers: X-Requested-With, Content-Type, Origin, Authorization, Accept, Client-Security-Token, Accept-Encoding");
+        header("Access-Control-Max-Age: 1000");
+        header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
+        header("Content-Type: application/json");
+
+        resource = $this->context["resource-id"];
+        $author_result = pg_query_params(
+            $this->db_connection,
+            "SELECT author FROM project_resource WHERE id = ($1)",
+            [$resource]);
+        $author = pg_fetch_all($author_result)[0]["author"];
+
+        echo json_encode(["author" => $author]);
+    }
 }
 
 /*
