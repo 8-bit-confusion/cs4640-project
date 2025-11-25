@@ -14,6 +14,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="styles/main.css">
         <link rel="icon" type="image/png" href="styles/OpenLearnIcon.png">
+        <script src="profile.js" defer></script>
     </head>
 
     <body class="page-fill-body flex-col">
@@ -52,7 +53,7 @@
                     <?php endif; ?>
                     
                     <?php $bioMax = 200; ?>
-                    <form class="flex-col" method="post" action="index.php" style="gap: 16px;">
+                    <form id="profile-form" class="flex-col" method="post" action="index.php" style="gap: 16px;">
                         <input type="hidden" name="command" value="do-update-profile">
                         <div class="div-input">
                             <label for="pf-display">Display name</label><br>
@@ -69,15 +70,16 @@
                         </div>
 
                         <div class="div-input">
-                        <label for="pf-bio">Description</label><br>
-                        <textarea class="register-input"
-                                    id="pf-bio"
-                                    name="bio"
-                                    rows="4"
-                                    maxlength="<?= htmlspecialchars($bioMax) ?>"
-                                    placeholder="Tell others about your interests…"><?=
-                            htmlspecialchars($user['bio'])
-                        ?></textarea>
+                            <label for="pf-bio">Description</label><br>
+                            <textarea class="register-input"
+                                        id="pf-bio"
+                                        name="bio"
+                                        rows="4"
+                                        maxlength="<?= htmlspecialchars($bioMax) ?>"
+                                        placeholder="Tell others about your interests…"><?=
+                                htmlspecialchars($user['bio'])
+                            ?></textarea>
+                            <small id="bio-counter" class="on-secondary-surface" style="opacity:.8;"></small>
                         </div>
                         <button class="styled-button" type="submit" aria-label="Save profile changes">Save</button>
                     </form>
