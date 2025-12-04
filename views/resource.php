@@ -34,7 +34,9 @@
                     <div class="flex-row" style="gap: 10px;">
                         <span style="font-size: 24px;"><?php echo $resource_data["download_count"]; ?></span>
                         <!-- Download entire resource not yet implemented -->
-                        <img class="download-icon-large" src="styles/download-icon.svg" alt="downloads">
+                         <a href="?command=do-download-all&resource_id=<?= urlencode($resource_data["id"]) ?>">
+                            <img class="download-icon-large" src="styles/download-icon.svg" alt="Download resource icon">
+                        </a>
                     </div>
                 </div>
                 <span>

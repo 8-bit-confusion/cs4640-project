@@ -13,7 +13,7 @@ class SessionController {
         // AWS S3 Bucket setup
         $this->bucket = new Bucket($config);
         
-        $db_config = $config->server_db();
+        $db_config = $config->local_db();
 
         $host = $db_config["host"];
         $user = $db_config["user"];
@@ -70,6 +70,7 @@ class SessionController {
             'do-update-profile' => $this->doUpdateProfile(),
             'do-download' => $this->doDownload(),
             'do-logout' => session_destroy() && $this->showWelcome(),
+            'do-download-all' => $this->doDownloadAll(),
 
             // json commands
             'get-author' => $this->getAuthor(),
@@ -474,6 +475,26 @@ class SessionController {
         exit;
     }
 
+    public function doDownloadAll() {
+        $zipname = $resource_data["title"] . ".zip";
+        $zip = new ZipArchive();
+        $zip->open($zipname, ZipArchive::CREATE);
+
+        if (isset($this->context['resource_id'])) {
+            $res = pg_query_params(
+                $this->db_connection,
+                "SELECT files FROM project_resource WHERE id = $1",
+                [$this->context['resource_id']]
+            );
+            $encoded_files = pg_fetch_all($res)[0]["files"];
+            $files = json_decode($encoded_files, true);
+            if ($files === null) $files = [];
+
+
+            // https://stackoverflow.com/questions/63692496/create-zip-download-an-s3-folder-multiple-files-with-aws-sdk-php 
+            
+    }
+
 
     public function doUpdateProfile() {
         if (!isset($_SESSION["username"])) {
@@ -570,16 +591,8 @@ class SessionController {
 
         echo json_encode(["author" => $author], JSON_PRETTY_PRINT);
     }
+
 }
 
-/*
-
-for (file in from_result) {
-    pg_query(insert file into files table) ----> puts file record at some serial id
-}
-
-pg_query(insert resource with files $1, [[file_id_1, file_id_2]])
-
-*/
 
 ?>
