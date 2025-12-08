@@ -13,7 +13,7 @@ class SessionController {
         // AWS S3 Bucket setup
         $this->bucket = new Bucket($config);
         
-        $db_config = $config->server_db();
+        $db_config = $config->local_db();
 
         $host = $db_config["host"];
         $user = $db_config["user"];
@@ -476,23 +476,42 @@ class SessionController {
     }
 
     public function doDownloadAll() {
-        $zipname = $resource_data["title"] . ".zip";
-        $zip = new ZipArchive();
-        $zip->open($zipname, ZipArchive::CREATE);
-
         if (isset($this->context['resource_id'])) {
             $res = pg_query_params(
                 $this->db_connection,
-                "SELECT files FROM project_resource WHERE id = $1",
+                "SELECT files, title FROM project_resource WHERE id = $1",
                 [$this->context['resource_id']]
             );
             $encoded_files = pg_fetch_all($res)[0]["files"];
+
+
+            $resource_name = pg_fetch_all($res)[0]["title"];
+            $zip_name = $resource_name. ".zip";
+            $zip = new ZipArchive();
+            $zip->open($zip_name, ZipArchive::CREATE);
+
             $files = json_decode($encoded_files, true);
-            if ($files === null) $files = [];
 
+            $file_keys = [];
 
+            foreach ($files as $file_id) {
+                $file_res = pg_query_params(
+                    $this->db_connection,
+                    "SELECT aws_key, name FROM project_file WHERE id = $1",
+                    [$file_id]
+                );
+                $file_row = pg_fetch_assoc($file_res);
+                if (!$file_row) {
+                    continue; // skip missing files
+                }
+                array_push($file_keys, $file_row["aws_key"]);
+            }
+            
+            $this->bucket->downloadMultiple($zip_name, $file_keys);
+                
             // https://stackoverflow.com/questions/63692496/create-zip-download-an-s3-folder-multiple-files-with-aws-sdk-php 
             
+        }
     }
 
 

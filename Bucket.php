@@ -64,5 +64,27 @@ class Bucket{
         ]);
     }
 
+    public function downloadMultiple($zip_name, $keys) {
+        $zip = new ZipArchive();
+        $zip->open($zip_name, ZipArchive::CREATE);
+
+        foreach ($keys as $key) {
+            $file = $this->client->getObject([
+                'Bucket' => $this->bucket,
+                'Key' => $key,
+            ]);
+            $zip->addFromString(basename($key), $file['Body']);
+        }
+
+        $zip->close();
+        header('Content-Type: application/zip');
+        header('Content-Disposition: attachment; filename="' . $zip_name . '"');
+        header('Content-Length: ' . filesize($zip_name));
+        readfile($zip_name);
+
+        unlink($zip_name);
+        exit;
+    }
+
 }
 ?>
