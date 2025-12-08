@@ -469,9 +469,11 @@ class SessionController {
         }
 
         // presign a short-lived URL (no need to stream bytes through PHP)
+        $this->incrementDownloadCount($this->context['resource_id']);
         $url = $this->bucket->presignGetUrl($key, '+5 minutes');
 
         header('Location: ' . $url);
+        
         exit;
     }
 
@@ -506,14 +508,23 @@ class SessionController {
                 }
                 array_push($file_keys, $file_row["aws_key"]);
             }
-            
+
+            $this->incrementDownloadCount($this->context['resource_id']);
             $this->bucket->downloadMultiple($zip_name, $file_keys);
+            
                 
             // https://stackoverflow.com/questions/63692496/create-zip-download-an-s3-folder-multiple-files-with-aws-sdk-php 
             
         }
     }
 
+    private function incrementDownloadCount($resource_id) {
+        pg_query_params(
+            $this->db_connection,
+            "UPDATE project_resource SET download_count = download_count + 1 WHERE id = $1",
+            [$resource_id]
+        );
+    }
 
     public function doUpdateProfile() {
         if (!isset($_SESSION["username"])) {

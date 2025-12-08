@@ -33,7 +33,6 @@
                     <span style="font-size: 48px;"><?php echo $resource_data["title"]; ?></span>
                     <div class="flex-row" style="gap: 10px;">
                         <span style="font-size: 24px;"><?php echo $resource_data["download_count"]; ?></span>
-                        <!-- Download entire resource not yet implemented -->
                          <a href="?command=do-download-all&resource_id=<?= urlencode($resource_data["id"]) ?>">
                             <img class="download-icon-large" src="styles/download-icon.svg" alt="Download resource icon">
                         </a>
@@ -48,8 +47,10 @@
                         <?php for ( $i = 0; $i < count($file_data); $i++) { ?>
                             <div class="styled-file">
                                 <img style="height:20px;justify-self:left;" src="styles/attach-file-icon.png" alt="File attachment icon">
-                                <span style="flex-grow: 1"><?php echo $file_data[$i][0]; ?></span>
-                                <a href="?command=do-download&file_id=<?= urlencode($file_data[$i][1]) ?>"
+                                <span style="flex-grow: 1"><?php echo $file_data[$i][0]; ?>
+                                </span>
+                                <a href="?command=do-download&file_id=<?= urlencode($file_data[$i][1]) ?>
+                                         &resource_id=<?= urlencode($resource_data["id"]) ?>"
                                 class="flex-col icon-button"
                                 aria-label="Download <?= htmlspecialchars($file_data[$i][0]) ?>">
                                     <img src="styles/download-icon.svg" alt="Download icon">
