@@ -43,17 +43,17 @@
                 <img class="preview" src="styles/img-preview.jpg" alt="Image preview">
                 <div class="outline-section flex-col">
                     <?php if (count($file_data) == 0) { echo "No attached files."; } else { ?>
-                        <div class="styled-file">
-                            <?php for ( $i = 0; $i < count($file_data); $i++) { ?>
-                            <img style="height:20px;justify-self:left;" src="styles/attach-file-icon.png" alt="File attachment icon">
-                            <span style="flex-grow: 1"><?php echo $file_data[$i][0]; ?></span>
+                        <?php for ( $i = 0; $i < count($file_data); $i++) { ?>
+                            <div class="styled-file">
+                                <img style="height:20px;justify-self:left;" src="styles/attach-file-icon.png" alt="File attachment icon">
+                                <span style="flex-grow: 1"><?php echo $file_data[$i][0]; ?></span>
                                 <a href="?command=do-download&file_id=<?= urlencode($file_data[$i][1]) ?>"
                                 class="flex-col icon-button"
                                 aria-label="Download <?= htmlspecialchars($file_data[$i][0]) ?>">
                                     <img src="styles/download-icon.svg" alt="Download icon">
                                 </a>
-                            <?php } ?>
-                        </div>
+                            </div>
+                        <?php } ?>
                     <?php } ?>
                 </div>
                 <div class="flex-row tags">
