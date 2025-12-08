@@ -115,16 +115,31 @@ class SessionController {
         if ($files === null) $files = [];
         $files_names = [];
         $file_data = array();
+        $preview_url = null;  
 
         foreach ($files as $file_id) {
-            $file_name_results = pg_query_params(
+            $file_row_results = pg_query_params(
                 $this->db_connection,
-                "SELECT name FROM project_file WHERE id = $1",
+                "SELECT name, aws_key FROM project_file WHERE id = $1",
                 [$file_id]);
-            $file_name = pg_fetch_all($file_name_results)[0]["name"];
-            array_push($file_data, [$file_name, $file_id]);
-        }
+            $file_row = pg_fetch_assoc($file_row_results);
+            if (!$file_row) {
+                continue;
+            }
 
+            $file_name = $file_row["name"];
+            $aws_key   = $file_row["aws_key"];
+
+            $file_data[] = [$file_name, $file_id];
+
+            if ($preview_url === null) {
+                $ext = strtolower(pathinfo($file_name, PATHINFO_EXTENSION));
+                if (in_array($ext, ['jpg', 'jpeg', 'png', 'gif', 'webp'])) {
+                // presign a short-lived URL to display inline
+                    $preview_url = $this->bucket->presignGetUrl($aws_key, '+5 minutes');
+                }
+            }
+        }
         $comments_result = pg_query_params(
             $this->db_connection,
             "SELECT * FROM project_comment WHERE project_comment.resource_id = $1",

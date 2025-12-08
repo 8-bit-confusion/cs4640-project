@@ -41,7 +41,15 @@
                 <span>
                     <?php echo $resource_data["body"];?>
                 </span>
-                <img class="preview" src="styles/img-preview.jpg" alt="Image preview">
+                <?php if (!empty($preview_url)) { ?>
+                    <img class="preview"
+                        src="<?= htmlspecialchars($preview_url) ?>"
+                        alt="Preview of <?= htmlspecialchars($resource_data['title']) ?>">
+                <?php } else { ?>
+                        <img class="preview">
+                        src="styles/img-preview.jpg"
+                        alt="Image preview">
+                    <?php } ?>
                 <div class="outline-section flex-col">
                     <?php if (count($file_data) == 0) { echo "No attached files."; } else { ?>
                         <?php for ( $i = 0; $i < count($file_data); $i++) { ?>
